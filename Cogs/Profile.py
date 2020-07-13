@@ -32,8 +32,15 @@ class Profile(commands.Cog):
         if account['google_classroom'] is not None:
             embed.add_field(name="<:people:732103029565947934> Google Classroom", value=f"{account['google_classroom']} <:check_verify:732103029121089638>", inline=False)
         else:
-            embed.add_field(name="<:people:732103029565947934> Google Classroom",
-                            value="<:cross:732103029712617482> Not Linked. [**Link now**](https://classroom.google.com)", inline=False)
+            if owner:
+                embed.add_field(name="<:people:732103029565947934> Google Classroom",
+                                value="<:cross:732103029712617482> Not Linked. [**Link now**]("
+                                      "https://classroom.google.com)", 
+                                inline=False)
+            else:
+                embed.add_field(name="<:people:732103029565947934> Google Classroom",
+                                value="<:cross:732103029712617482> Not Linked.",
+                                inline=False)
 
         if len(account['classes']) > 0:
             if account['is_student']:
