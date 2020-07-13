@@ -1,16 +1,14 @@
 import sys
-
 import asyncio
-
 import config
-
-print("Bot Writen By: KAJ7#0001, Larvey#0001")
-# Imports
 import discord
 from discord.ext import commands
 import logging
 
+print("Bot Writen By: KAJ7#0001, Larvey#0001")
+
 logging.basicConfig(level=logging.INFO, format="DiscordClassroom [%(levelname)s] | %(message)s")
+
 
 async def get_prefix(bot, message):
     return commands.when_mentioned_or("d!")(bot, message)
