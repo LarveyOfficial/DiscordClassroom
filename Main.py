@@ -46,14 +46,19 @@ def owner(ctx):
     return int(ctx.author.id) in config.OWNERIDS
 
 
-# Restarts and reloads all cogs
-@bot.command(aliases=["retard"])
+@bot.command()
 @commands.check(owner)
 async def restart(ctx):
+    await ctx.send("Force Restarting...")
+    sys.exit()
+
+# Restarts and reloads all cogs
+@bot.command()
+@commands.check(owner)
+async def reload(ctx):
     """
     Restart the bot.
     """
-    sys.exit()
     
     restarting = discord.Embed(
         title="Restarting...",
