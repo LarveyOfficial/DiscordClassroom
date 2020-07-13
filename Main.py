@@ -1,3 +1,5 @@
+import sys
+
 import config
 
 print("Bot Writen By: KAJ7#0001, Larvey#0001")
@@ -51,6 +53,8 @@ async def restart(ctx):
     """
     Restart the bot.
     """
+    sys.exit()
+    
     restarting = discord.Embed(
         title="Restarting...",
         color=config.MAINCOLOR
