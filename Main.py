@@ -109,7 +109,7 @@ async def on_ready():
     logging.info(f"Bot has started succesfully in {len(bot.guilds)} server(s) with {len(bot.users)} users!")
     await bot.change_presence(
         activity=discord.Activity(type=discord.ActivityType.watching, name="Bot Restarted!"))
-    await asyncio.sleep(10)
+    await asyncio.sleep(60)
     await bot.change_presence(activity=None)
 
 
