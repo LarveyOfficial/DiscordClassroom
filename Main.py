@@ -43,7 +43,7 @@ for cog in cogs:
 
 # Check to see if the user invoking the command is in the OWNERIDS Config
 def owner(ctx):
-    return int(ctx.author.id) in Config.OWNERIDS
+    return int(ctx.author.id) in config.OWNERIDS
 
 
 # Restarts and reloads all cogs
