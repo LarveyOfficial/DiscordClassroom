@@ -38,7 +38,7 @@ async def vote(ctx):
                             color=config.MAINCOLOR))
 
 # Cogs
-cogs = ["Profile"]
+cogs = ["Profile", "Class"]
 
 # Starts all cogs
 for cog in cogs:
@@ -66,7 +66,7 @@ async def reload(ctx):
     """
     Restart the bot.
     """
-    
+
     restarting = discord.Embed(
         title="Restarting...",
         color=config.MAINCOLOR
