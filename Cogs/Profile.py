@@ -25,9 +25,9 @@ class Profile(commands.Cog):
         if owner and account['is_student'] and len(account['classes']) < 1:
             embed.set_footer(text="Are you a teacher? Make sure to type 'd!class'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
         if account['bio'] is None:
-            embed.add_field(name="<:news:732103029565685770> Bio", value=f"{user.name}'s Bio can be set using `d!bio`", inline=False)
+            embed.add_field(name="<:news:732103029565685770> Note", value=f"{user.name}'s Note can be set using `d!note`", inline=False)
         else:
-            embed.add_field(name="<:news:732103029565685770> Bio", value=f"{account['bio']}", inline=False)
+            embed.add_field(name="<:news:732103029565685770> Note", value=f"{account['bio']}", inline=False)
 
         if len(account['classes']) > 0:
             if account['is_student']:
@@ -36,6 +36,12 @@ class Profile(commands.Cog):
             else:
                 embed.add_field(name="<:inv:732103029213364295> Classes", value=f"{str(len(account['classes']))} Classes teaching", inline=True)
                 embed.add_field(name="<:auth:732103030110945332> Role", value=f"Teacher", inline=True)
+
+        if account['google_classroom'] is not None:
+            embed.add_field(name="<:people:732103029565947934> Google CLassroom", value=f"{account['google_classroom']} <:check_verify:732103029121089638>")
+        else:
+            embed.add_field(name="<:people:732103029565947934> Google CLassroom",
+                            value="<:cross:732103029712617482> Not Linked.")
 
 
         await ctx.send(embed=embed)
