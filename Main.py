@@ -5,7 +5,6 @@ import asyncio
 import config
 
 print("Bot Writen By: KAJ7#0001, Larvey#0001")
-can_restart = False
 # Imports
 import discord
 from discord.ext import commands
@@ -22,6 +21,8 @@ bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True)
 
 # Remove default help command
 bot.remove_command("help")
+
+can_restart = False
 
 @bot.command(aliases=['link', 'join'])
 async def invite(ctx):
@@ -114,6 +115,7 @@ async def on_ready():
     await bot.change_presence(
         activity=discord.Activity(type=discord.ActivityType.watching, name="Bot Restarted!"))
     await asyncio.sleep(60)
+    global can_restart
     can_restart = True
     await bot.change_presence(activity=None)
 
