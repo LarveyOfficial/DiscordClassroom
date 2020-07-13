@@ -5,6 +5,7 @@ import asyncio
 import config
 
 print("Bot Writen By: KAJ7#0001, Larvey#0001")
+can_restart = False
 # Imports
 import discord
 from discord.ext import commands
@@ -51,6 +52,9 @@ def owner(ctx):
 @bot.command()
 @commands.check(owner)
 async def restart(ctx):
+    if not can_restart:
+        await ctx.send("Must wait 60 seconds before restarting.")
+        return
     await ctx.send("Force Restarting...")
     sys.exit()
 
@@ -110,6 +114,7 @@ async def on_ready():
     await bot.change_presence(
         activity=discord.Activity(type=discord.ActivityType.watching, name="Bot Restarted!"))
     await asyncio.sleep(60)
+    can_restart = True
     await bot.change_presence(activity=None)
 
 
