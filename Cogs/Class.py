@@ -3,13 +3,13 @@ import asyncio
 import config
 import discord
 from discord.ext import commands
-
 import utils
+
 
 class Class(commands.Cog):
 
-    def setup(bot):
-        bot.add_cog(Profile(bot))
+    def __init__(self, bot):
+        self.bot = bot
 
     @commands.command(aliases=['class','c'])
     async def dash(self, ctx):
