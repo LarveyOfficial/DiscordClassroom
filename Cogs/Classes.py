@@ -59,10 +59,10 @@ class Classes(commands.Cog):
                     embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
                     await teacher.send(embed=embed)
             else:
-                embed = discord.Embed(title="<a:cross:732103029712617482> Class Leave Error", description=f"Sorry, You are not in this Class, please try again.", color=config.ERRORCOLOR)
+                embed = discord.Embed(title="<:cross:732103029712617482> Class Leave Error", description=f"Sorry, You are not in this Class, please try again.", color=config.ERRORCOLOR)
                 await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title="<a:cross:732103029712617482> Class Leave Error", description=f"Sorry, You are not in this Class, please try again.", color=config.ERRORCOLOR)
+            embed = discord.Embed(title="<:cross:732103029712617482> Class Leave Error", description=f"Sorry, You are not in this Class, please try again.", color=config.ERRORCOLOR)
             await ctx.send(embed=embed)
 
 
