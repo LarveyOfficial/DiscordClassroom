@@ -22,9 +22,10 @@ class Profile(commands.Cog):
         embed = discord.Embed(title=f"<:enter:732105777577459723> {user.name}'s Profile",
                               color=config.MAINCOLOR)
         embed.set_thumbnail(url=str(user.avatar_url))
-        account_classes = utils.get_user_classes(ctx.author.id)
+        account_classes = list(utils.get_user_classes(ctx.author.id))
+        account_teaching_classes = list(utils.get_teaching_classes(ctx.author.id))
 
-        if owner and account['is_student'] and len(account['classes']) < 1:
+        if owner and account['is_student'] and len(account_classes) < 1:
             embed.set_footer(text="Are you a teacher? Make sure to type 'd!class'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
         if account['bio'] is None:
             embed.add_field(name="<:news:732103029565685770> Note", value=f"{user.name}'s Note can be set using `d!note`", inline=False)
@@ -40,13 +41,18 @@ class Profile(commands.Cog):
             else:
                 embed.add_field(name="<:people:732103029565947934> Google Classroom", value="<:cross:732103029712617482> Not Linked.", inline=False)
 
-        if len(account['classes']) > 0:
-            if account['is_student']:
-                embed.add_field(name="<:inv:732103029213364295> Classes", value=f"{str(len(account['classes']))} Classes joined", inline=True)
-                embed.add_field(name="<:auth:732103030110945332> Role", value=f"Student", inline=True)
-            else:
-                embed.add_field(name="<:inv:732103029213364295> Classes", value=f"{str(len(account['classes']))} Classes teaching", inline=True)
-                embed.add_field(name="<:auth:732103030110945332> Role", value=f"Teacher", inline=True)
+        classes_string = ""
+        if len(account_classes) > 0:
+            classes_string += f"{str(len(account['classes']))} Classes joined"
+        if len(account_teaching_classes) > 0:
+            classes_string += f"\n{str(len(account_teaching_classes))} Classes teaching"
+        if classes_string != "":
+            embed.add_field(name="<:inv:732103029213364295> Classes", value=classes_string, inline=True)
+
+        if account['is_student']:
+            embed.add_field(name="<:auth:732103030110945332> Role", value=f"Student", inline=True)
+        else:
+            embed.add_field(name="<:auth:732103030110945332> Role", value=f"Teacher", inline=True)
 
 
 
