@@ -6,12 +6,12 @@ from discord.ext import commands
 import utils
 
 
-class Class(commands.Cog):
+class Classes(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['class','c'])
+    @commands.command(aliases=['classes', 'c'], name="class")
     async def dash(self, ctx):
         account, first_time = utils.get_profile(ctx.author.id)
         embed = discord.Embed(title="<:inv:732103029213364295> Your Classes",
@@ -41,8 +41,5 @@ class Class(commands.Cog):
                 embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
                 await teacher_account.send(embed=embed)
 
-
-
-
 def setup(bot):
-    bot.add_cog(Class(bot))
+    bot.add_cog(Classes(bot))

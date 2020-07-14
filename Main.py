@@ -22,7 +22,7 @@ bot.remove_command("help")
 
 can_restart = False
 
-@bot.command(aliases=['link', 'join'])
+@bot.command(aliases=['link'])
 async def invite(ctx):
     await ctx.send(embed=discord.Embed(
         description="🔗 [**Invite Link**](https://discord.com/api/oauth2/authorize?client_id=732013656149196823&permissions=363586&scope=bot)",
@@ -36,7 +36,7 @@ async def vote(ctx):
                             color=config.MAINCOLOR))
 
 # Cogs
-cogs = ["Profile", "Class"]
+cogs = ["Profile", "Classes"]
 
 # Starts all cogs
 for cog in cogs:
