@@ -24,7 +24,7 @@ class Class(commands.Cog):
                 embed.add_field(name="<:enter:732105777577459723> " + classname,
                                 value="Class Code : " + classcode + "\nClass Owner : <@" + str(classowner) + ">\n",
                                 inline=False)
-            embed.description += "*Use `d!join` to join and `d!create` to create a class.*"
+            embed.description = "*Use `d!join` to join and `d!create` to create a class.*"
             await ctx.send(embed=embed)
 
 def setup(bot):
