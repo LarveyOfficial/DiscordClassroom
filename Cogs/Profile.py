@@ -57,7 +57,7 @@ class Profile(commands.Cog):
 
         if owner and account['is_student'] and len(account_classes) < 1:
             embed.set_footer(text="Are you a teacher? Make sure to type 'd!class'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
-        if account['bio'] is None:
+        if account['note'] is None:
             embed.add_field(name="<:news:732103029565685770> Note", value=f"{user.name}'s Note can be set using `d!note`", inline=False)
         else:
             embed.add_field(name="<:news:732103029565685770> Note", value=f"{account['note']}", inline=False)
