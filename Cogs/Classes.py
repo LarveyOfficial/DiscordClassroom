@@ -9,8 +9,10 @@ from discord.ext import commands
 import utils
 
 
-def gen_code(length=6):
-    return "".join(random.choices(string.ascii_letters + string.digits, length))
+def gen_code(stringLength=6):
+    """Generate a random string of letters and digits """
+    lettersAndDigits = string.ascii_letters + string.digits
+    return ''.join(random.choice(lettersAndDigits) for i in range(stringLength))
 
 class Classes(commands.Cog):
 
