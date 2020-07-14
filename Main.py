@@ -20,8 +20,6 @@ bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True)
 # Remove default help command
 bot.remove_command("help")
 
-can_restart = False
-
 @bot.command(aliases=['link'])
 async def invite(ctx):
     await ctx.send(embed=discord.Embed(
@@ -51,9 +49,6 @@ def owner(ctx):
 @bot.command()
 @commands.check(owner)
 async def restart(ctx):
-    if not can_restart:
-        await ctx.send("Must wait 60 seconds before restarting.")
-        return
     await ctx.send("Force Restarting...")
     sys.exit()
 
@@ -112,9 +107,7 @@ async def on_ready():
     logging.info(f"Bot has started succesfully in {len(bot.guilds)} server(s) with {len(bot.users)} users!")
     await bot.change_presence(
         activity=discord.Activity(type=discord.ActivityType.watching, name="Bot Restarted!"))
-    await asyncio.sleep(60)
-    global can_restart
-    can_restart = True
+    await asyncio.sleep(5)
     await bot.change_presence(activity=None)
 
 
