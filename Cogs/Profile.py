@@ -43,7 +43,7 @@ class Profile(commands.Cog):
 
         classes_string = ""
         if len(account_classes) > 0:
-            classes_string += f"{str(len(account['classes']))} Classes joined"
+            classes_string += f"{str(len(account_classes))} Classes joined"
         if len(account_teaching_classes) > 0:
             classes_string += f"\n{str(len(account_teaching_classes))} Classes teaching"
         if classes_string != "":

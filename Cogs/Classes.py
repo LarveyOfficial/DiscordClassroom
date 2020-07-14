@@ -87,7 +87,7 @@ class Classes(commands.Cog):
         account, first_time = utils.get_profile(ctx.author.id)
 
         teaching = list(utils.get_teaching_classes(ctx.author.id))
-        if len(teaching) > 8:
+        if len(teaching) >= 8:
             embed = discord.Embed(title="<:card:732103029523873823> Premium",
                                   description=f"It looks like you have reached the maximum amount of classes you can teach. Premium allows for unlimited classes, and benifits all yoru students!\n\n- One time purchase\n- unlimited classes\n- tons of amazing features\n\nVisit [**Our website**](https://zombo.com) to purchase premium!",
                                   color=config.MAINCOLOR)
