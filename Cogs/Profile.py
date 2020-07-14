@@ -60,7 +60,7 @@ class Profile(commands.Cog):
         if account['bio'] is None:
             embed.add_field(name="<:news:732103029565685770> Note", value=f"{user.name}'s Note can be set using `d!note`", inline=False)
         else:
-            embed.add_field(name="<:news:732103029565685770> Note", value=f"{account['bio']}", inline=False)
+            embed.add_field(name="<:news:732103029565685770> Note", value=f"{account['note']}", inline=False)
 
         if account['google_classroom'] is not None:
             embed.add_field(name="<:people:732103029565947934> Google Classroom", value=f"{account['google_classroom']} <:check_verify:732103029121089638>", inline=False)
