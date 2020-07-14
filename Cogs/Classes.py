@@ -116,6 +116,9 @@ class Classes(commands.Cog):
         new_class = {'name': name, 'code': gen_code(), 'owner': ctx.author.id, 'members': [], 'assignments': []}
         config.CLASSES.insert_one(new_class)
 
+        embed = discord.Embed(title="<:checkb:732103029020557323> Class Created", color=config.MAINCOLOR, description=f"**{new_class['name']} [{new_class['code']}] has been created.**\n\nStudents can enroll by typing `d!join {new_class['code']}`.\nView more information with `d!class {new_class['code']}`")
+        await ctx.send(embed=embed)
+
         if account['is_student']:
             config.USERS.update({'user_id': ctx.author.id}, {'$set': {'is_student': False}})
 
