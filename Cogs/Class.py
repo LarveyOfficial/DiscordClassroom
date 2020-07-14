@@ -21,8 +21,8 @@ class Class(commands.Cog):
                 classname = aclass['name']
                 classcode = aclass['code']
                 classowner = aclass['owner']
-                embed.add_field(name="<:enter:732105777577459723> " + classname,
-                                value="Class Code : " + classcode + "\nClass Owner : <@" + str(classowner) + ">\n",
+                embed.add_field(name="<:enter:732105777577459723> " + classname + " ["+classcode+"]",
+                                value="Teacher: <@" + str(classowner) + ">\nSize: " + str(len(aclass['members'])) + "\n",
                                 inline=False)
             embed.description = "*Use `d!join` to join and `d!create` to create a class.*"
             await ctx.send(embed=embed)
