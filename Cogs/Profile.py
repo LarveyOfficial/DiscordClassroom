@@ -12,6 +12,36 @@ class Profile(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.command()
+    async def note(self, ctx, note:str=None):
+        account, first_time = utils.get_profile(ctx.author.id)
+        if note is None:
+            embed = discord.Embed(title="<:news:732103029565685770> Note",
+                                  description=f"Reply with a new note to change the note shown on your profile.\n\n*reply with `cancel` to cancel*",
+                                  color=config.MAINCOLOR)
+            embed.set_footer(text="Message timout in 60 seconds",
+                             icon_url="https://cdn.discordapp.com/emojis/732714132461191330.png?v=1")
+            start_message = await ctx.send(embed=embed)
+
+            def check(msg):
+                return msg.author.id == ctx.author.id and msg.channel.id == ctx.channel.id and len(msg.content) < 100
+
+            try:
+                note_message = await self.bot.wait_for('message', check=check, timeout=60.0)
+                if note_message.content.lower() == "cancel":
+                    embed.description = "Note has not been changed."
+                    embed.set_footer()
+                    await start_message.edit(embed=embed)
+                    return
+                note = note_message.content
+            except asyncio.TimeoutError:
+                embed.description = "Note change has timed out. Please type `d!note` to try again."
+                embed.set_footer()
+                await start_message.edit(embed=embed)
+                return
+        config.USERS.update({'user_id': ctx.author.id}, {'$set': {'note': note}})
+        await ctx.send(embed=discord.Embed(title="<:checkb:732103029020557323> Note has been changed!"))
+
     @commands.command(aliases=['p', 'user'])
     async def profile(self, ctx, user: discord.Member = None):
         owner = False
