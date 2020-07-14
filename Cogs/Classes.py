@@ -29,14 +29,14 @@ class Classes(commands.Cog):
             classcode = aclass['code']
             classowner = aclass['owner']
             embed.add_field(name="<:crown:732103028781613117> " + classname + " [" + classcode + "]",
-                            value="Teacher: **You**\nSize: " + str(len(aclass['members'])) + "\n",
+                            value="Teacher: **You**\nStudents: " + str(len(aclass['members'])) + "\n",
                             inline=True)
         for aclass in utils.get_user_classes(ctx.author.id):
             classname = aclass['name']
             classcode = aclass['code']
             classowner = aclass['owner']
             embed.add_field(name="<:enter:732105777577459723> " + classname + " [" + classcode + "]",
-                            value="Teacher: <@" + str(classowner) + ">\nSize: " + str(len(aclass['members'])) + "\n",
+                            value="Teacher: <@" + str(classowner) + ">\nClassmates: " + str(len(aclass['members'])) + "\n",
                             inline=True)
         embed.description = "*Use `d!join` to join and `d!create` to create a class.*"
         await ctx.send(embed=embed)
@@ -58,13 +58,13 @@ class Classes(commands.Cog):
                         embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
                         await teacher.send(embed=embed)
                 else:
-                    embed = discord.Embed(title="<:cross:732103029712617482> Class Join Error", description=f"Sorry you are already in the class : [**{chosen_class['name']}**].", color=config.MAINCOLOR)
+                    embed = discord.Embed(title="<:cross:732103029712617482> Already enrolled in class", color=config.MAINCOLOR)
                     await ctx.send(embed=embed)
             else:
-                embed = discord.Embed(title="<:cross:732103029712617482> Class Join Error", description="A Teacher cannot join their own class.", color=config.MAINCOLOR)
+                embed = discord.Embed(title="<:cross:732103029712617482> A Teacher cannot join their own class", color=config.MAINCOLOR)
                 await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title="<:cross:732103029712617482> Class Join Error", description=f"Sorry, This class does not exist, please try again.", color=config.MAINCOLOR)
+            embed = discord.Embed(title="<:cross:732103029712617482> Class does not exist", color=config.MAINCOLOR)
             await ctx.send(embed=embed)
 
     @commands.command()
@@ -83,10 +83,10 @@ class Classes(commands.Cog):
                     embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
                     await teacher.send(embed=embed)
             else:
-                embed = discord.Embed(title="<:cross:732103029712617482> Class Leave Error", description=f"Sorry, You are not in this Class, please try again.", color=config.MAINCOLOR)
+                embed = discord.Embed(title="<:cross:732103029712617482> You are not enrolled in that class", color=config.MAINCOLOR)
                 await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title="<:cross:732103029712617482> Class Leave Error", description=f"Sorry, You are not in this Class, please try again.", color=config.MAINCOLOR)
+            embed = discord.Embed(title="<:cross:732103029712617482> You are not enrolled in that class", color=config.MAINCOLOR)
             await ctx.send(embed=embed)
 
     @commands.command()
