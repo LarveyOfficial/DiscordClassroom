@@ -33,7 +33,7 @@ class Classes(commands.Cog):
         if chosen_class is not None:
             config.CLASSES.update_one({'code': code}, {'$push': {'members': ctx.author.id}})
             embed=discord.Embed(title="<:plus:732103029435924491> Class Joined", description=f"You have enrolled in **{chosen_class['name']}**.\nYou can see information about the class by typing `d!class {chosen_class['code']}`", color=config.MAINCOLOR)
-            await ctx.send(embed)
+            await ctx.send(embed=embed)
             teacher_account, first_time = utils.get_profile(chosen_class['owner'])
             teacher = self.bot.get_user(chosen_class['owner'])
             if teacher is not None and teacher_account['teacher_notifications']:
