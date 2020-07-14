@@ -30,14 +30,14 @@ class Classes(commands.Cog):
             classowner = aclass['owner']
             embed.add_field(name="<:enter:732105777577459723> " + classname + " [" + classcode + "] <:crown:732103028781613117>",
                             value="Teacher: **You**\nSize: " + str(len(aclass['members'])) + "\n",
-                            inline=False)
+                            inline=True)
         for aclass in utils.get_user_classes(ctx.author.id):
             classname = aclass['name']
             classcode = aclass['code']
             classowner = aclass['owner']
             embed.add_field(name="<:enter:732105777577459723> " + classname + " [" + classcode + "]",
                             value="Teacher: <@" + str(classowner) + ">\nSize: " + str(len(aclass['members'])) + "\n",
-                            inline=False)
+                            inline=True)
         embed.description = "*Use `d!join` to join and `d!create` to create a class.*"
         await ctx.send(embed=embed)
 
