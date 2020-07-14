@@ -42,7 +42,7 @@ class Classes(commands.Cog):
                     embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
                     await teacher.send(embed=embed)
             else:
-                embed = discord.Embed(title="<:cross:732103029712617482> Class Join Error", description=f"Sorry you are already in the class : {chosen_class['name']}.", color=config.MAINCOLOR)
+                embed = discord.Embed(title="<:cross:732103029712617482> Class Join Error", description=f"Sorry you are already in the class : [**{chosen_class['name']}**].", color=config.MAINCOLOR)
                 await ctx.send(embed=embed)
         else:
             embed = discord.Embed(title="<:cross:732103029712617482> Class Join Error", description=f"Sorry, This class does not exist, please try again.", color=config.MAINCOLOR)
