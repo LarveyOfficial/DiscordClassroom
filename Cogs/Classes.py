@@ -31,7 +31,7 @@ class Classes(commands.Cog):
         account, first_time = utils.get_profile(ctx.author.id)
         chosen_class = config.CLASSES.find_one({'code': code})
         if chosen_class is not None:
-            if not ctx.author.id in chosen_class['members']
+            if ctx.author.id not in chosen_class['members']:
                 config.CLASSES.update_one({'code': code}, {'$push': {'members': ctx.author.id}})
                 embed=discord.Embed(title="<:plus:732103029435924491> Class Joined", description=f"You have enrolled in **{chosen_class['name']}**.\nYou can see information about the class by typing `d!class {chosen_class['code']}`", color=config.MAINCOLOR)
                 await ctx.send(embed=embed)
