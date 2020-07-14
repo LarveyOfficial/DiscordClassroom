@@ -24,6 +24,13 @@ class Classes(commands.Cog):
         account, first_time = utils.get_profile(ctx.author.id)
         embed = discord.Embed(title="<:inv:732103029213364295> Your Classes",
                               color=config.MAINCOLOR)
+        for aclass in utils.get_teaching_classes(ctx.author.id):
+            classname = aclass['name']
+            classcode = aclass['code']
+            classowner = aclass['owner']
+            embed.add_field(name="<:enter:732105777577459723> " + classname + " [" + classcode + "] <:crown:732103028781613117>",
+                            value="Teacher: **You**\nSize: " + str(len(aclass['members'])) + "\n",
+                            inline=False)
         for aclass in utils.get_user_classes(ctx.author.id):
             classname = aclass['name']
             classcode = aclass['code']
