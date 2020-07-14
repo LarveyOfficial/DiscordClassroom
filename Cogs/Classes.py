@@ -51,6 +51,7 @@ class Classes(commands.Cog):
         else:
             embed = discord.Embed(title="<:cross:732103029712617482> Class Join Error", description=f"Sorry, This class does not exist, please try again.", color=config.MAINCOLOR)
             await ctx.send(embed=embed)
+
     @commands.command()
     async def leave(self, ctx, code:str=None):
         account, first_time = utils.get_profile(ctx.author.id)
