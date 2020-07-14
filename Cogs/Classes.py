@@ -1,3 +1,6 @@
+import random
+import string
+
 import pymongo
 import asyncio
 import config
@@ -5,6 +8,9 @@ import discord
 from discord.ext import commands
 import utils
 
+
+def gen_code(length=6):
+    return "".join(random.choices(string.ascii_letters + string.digits, length))
 
 class Classes(commands.Cog):
 
@@ -16,7 +22,7 @@ class Classes(commands.Cog):
         account, first_time = utils.get_profile(ctx.author.id)
         embed = discord.Embed(title="<:inv:732103029213364295> Your Classes",
                               color=config.MAINCOLOR)
-        for aclass in config.CLASSES.find({'members': ctx.author.id}):
+        for aclass in utils.get_user_classes(ctx.author.id):
             classname = aclass['name']
             classcode = aclass['code']
             classowner = aclass['owner']

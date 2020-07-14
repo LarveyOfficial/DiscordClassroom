@@ -22,6 +22,8 @@ class Profile(commands.Cog):
         embed = discord.Embed(title=f"<:enter:732105777577459723> {user.name}'s Profile",
                               color=config.MAINCOLOR)
         embed.set_thumbnail(url=str(user.avatar_url))
+        account_classes = utils.get_user_classes(ctx.author.id)
+
         if owner and account['is_student'] and len(account['classes']) < 1:
             embed.set_footer(text="Are you a teacher? Make sure to type 'd!class'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
         if account['bio'] is None:

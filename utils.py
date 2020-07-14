@@ -9,3 +9,7 @@ def get_profile(user_id):
         config.USERS.insert_one(document)
         return document, True
     return document, False
+
+
+def get_user_classes(user_id):
+    return config.CLASSES.find({'members': user_id})
