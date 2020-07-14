@@ -28,7 +28,7 @@ class Classes(commands.Cog):
             classname = aclass['name']
             classcode = aclass['code']
             classowner = aclass['owner']
-            embed.add_field(name="<:enter:732105777577459723> " + classname + " [" + classcode + "] <:crown:732103028781613117>",
+            embed.add_field(name="<:crown:732103028781613117> " + classname + " [" + classcode + "]",
                             value="Teacher: **You**\nSize: " + str(len(aclass['members'])) + "\n",
                             inline=True)
         for aclass in utils.get_user_classes(ctx.author.id):
