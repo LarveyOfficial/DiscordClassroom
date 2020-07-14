@@ -31,7 +31,7 @@ class Classes(commands.Cog):
         account, first_time = utils.get_profile(ctx.author.id)
         chosen_class = config.CLASSES.find_one({'code': code})
         if chosen_class is not None:
-            if chosen_class['owner'] is not ctx.author.id:
+            if chosen_class['owner'] != ctx.author.id:
                 if ctx.author.id not in chosen_class['members']:
                     config.CLASSES.update_one({'code': code}, {'$push': {'members': ctx.author.id}})
                     embed=discord.Embed(title="<:plus:732103029435924491> Class Joined", description=f"You have enrolled in **{chosen_class['name']}**.\nYou can see information about the class by typing `d!class {chosen_class['code']}`", color=config.MAINCOLOR)
@@ -63,7 +63,7 @@ class Classes(commands.Cog):
                 teacher_account, first_time = utils.get_profile(chosen_class['owner'])
                 teacher = self.bot.get_user(chosen_class['owner'])
                 if teacher is not None and teacher_account['teacher_notifications']:
-                    embed=discord.Embed(title="<a:bell:732103030488432720> Class Notification", description=f"A Student named {ctx.author.name} ({str(ctx.author.id)}) has enrolled in {chosen_class['name']} [{chosen_class['code']}]", color=config.MAINCOLOR)
+                    embed=discord.Embed(title="<a:bell:732103030488432720> Class Notification", description=f"A Student named {ctx.author.name} ({str(ctx.author.id)}) has unenrolled from {chosen_class['name']} [{chosen_class['code']}]", color=config.MAINCOLOR)
                     embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
                     await teacher.send(embed=embed)
             else:
