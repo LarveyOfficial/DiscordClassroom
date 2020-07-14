@@ -80,6 +80,47 @@ class Classes(commands.Cog):
             embed = discord.Embed(title="<:cross:732103029712617482> Class Leave Error", description=f"Sorry, You are not in this Class, please try again.", color=config.MAINCOLOR)
             await ctx.send(embed=embed)
 
+    @commands.command()
+    async def create(self, ctx, name: str = None):
+        account, first_time = utils.get_profile(ctx.author.id)
+
+        teaching = utils.get_teaching_classes(ctx.author.id)
+        if len(teaching) > 8:
+            embed = discord.Embed(title="<:card:732103029523873823> Premium",
+                                  description=f"It looks like you have reached the maximum amount of classes you can teach. Premium allows for unlimited classes, and benifits all yoru students!\n\n- One time purchase\n- unlimited classes\n- tons of amazing features\n\nVisit [**Our website**](https://zombo.com) to purchase premium!",
+                                  color=config.MAINCOLOR)
+            await ctx.send(embed=embed)
+            return
+
+        if name is None:
+            embed = discord.Embed(title="<:people:732103029565947934> Create a new class",
+                                  description=f"Creating a class is simple. All you need to do is type the name of the class in this channel.",
+                                  color=config.MAINCOLOR)
+            embed.set_footer(text="Message timout in 60 seconds", icon_url="https://cdn.discordapp.com/emojis/732714132461191330.png?v=1")
+            start_message = await ctx.send(embed=embed)
+
+            def check(msg):
+                return msg.author.id == ctx.author.id and msg.channel.id == ctx.channel.id and len(msg.content) < 100
+
+            try:
+                name_message = await self.bot.wait_for('message', check=check, timeout=60.0)
+                name = name_message.content
+            except asyncio.TimeoutError:
+                embed.description = "Class creation has timed out. Please type `d!create` to try again."
+                embed.set_footer()
+                await start_message.edit(embed=embed)
+                return
+
+        new_class = {'name': name, 'code': gen_code(), 'owner': ctx.author.id, 'members': [], 'assignments': []}
+        config.CLASSES.insert_one(new_class)
+
+        if account['teacher_notifications']:
+            embed = discord.Embed(title="<a:bell:732103030488432720> Class Notification",
+                                  description=f"You will receive notifications from your class {new_class['name']} [{new_class['code']}] and can be turned off at any time.",
+                                  color=config.MAINCOLOR)
+            embed.set_footer(text="to disable notifications type 'd!noti disable'",
+                             icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
+            await ctx.author.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(Classes(bot))

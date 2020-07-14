@@ -13,3 +13,7 @@ def get_profile(user_id):
 
 def get_user_classes(user_id):
     return config.CLASSES.find({'members': user_id})
+
+
+def get_teaching_classes(user_id):
+    return config.CLASSES.find({'owner': user_id})
