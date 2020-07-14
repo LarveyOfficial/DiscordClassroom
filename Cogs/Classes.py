@@ -39,7 +39,7 @@ class Classes(commands.Cog):
             if teacher is not None and teacher_account['teacher_notifications']:
                 embed=discord.Embed(title="<:pin:732461353830449173> Class Notification", description=f"A student named {ctx.author.name} ({str(ctx.author.id)}) has enrolled in {chosen_class['name']} [{chosen_class['code']}]", color=config.MAINCOLOR)
                 embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
-                await teacher_account.send(embed=embed)
+                await teacher.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(Classes(bot))
