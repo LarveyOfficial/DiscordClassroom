@@ -13,7 +13,7 @@ class Profile(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def note(self, ctx, note:str=None):
+    async def note(self, ctx, *, note:str=None):
         account, first_time = utils.get_profile(ctx.author.id)
         if note is None:
             embed = discord.Embed(title="<:news:732103029565685770> Note",

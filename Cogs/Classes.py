@@ -97,7 +97,7 @@ class Classes(commands.Cog):
             await ctx.send(embed=embed)
 
     @commands.command()
-    async def create(self, ctx, name: str = None):
+    async def create(self, ctx, *, name: str = None):
         account, first_time = utils.get_profile(ctx.author.id)
 
         teaching = list(utils.get_teaching_classes(ctx.author.id))
