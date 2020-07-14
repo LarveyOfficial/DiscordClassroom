@@ -58,13 +58,13 @@ class Classes(commands.Cog):
                         embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
                         await teacher.send(embed=embed)
                 else:
-                    embed = discord.Embed(title="<:cross:732103029712617482> Already enrolled in class", color=config.MAINCOLOR)
+                    embed = discord.Embed(title="<:cross:732103029712617482> You are already enrolled in this class", color=config.MAINCOLOR)
                     await ctx.send(embed=embed)
             else:
                 embed = discord.Embed(title="<:cross:732103029712617482> A Teacher cannot join their own class", color=config.MAINCOLOR)
                 await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title="<:cross:732103029712617482> Class does not exist", color=config.MAINCOLOR)
+            embed = discord.Embed(title="<:cross:732103029712617482> That class does not exist", color=config.MAINCOLOR)
             await ctx.send(embed=embed)
 
     @commands.command()
@@ -72,6 +72,13 @@ class Classes(commands.Cog):
         account, first_time = utils.get_profile(ctx.author.id)
         chosen_class = config.CLASSES.find_one({'code': code})
         if chosen_class is not None:
+
+            if chosen_class['owner'] == ctx.author.id:
+                embed = discord.Embed(title="<:cross:732103029712617482> Use 'd!delete " + code + "' to delete a class",
+                                      color=config.MAINCOLOR)
+                await ctx.send(embed=embed)
+                return
+
             if ctx.author.id in chosen_class['members']:
                 config.CLASSES.update_one({'code': code}, {'$pull': {'members': ctx.author.id}})
                 embed = discord.Embed(title="<:minus:732103028726824982> Left Class", description=f"You have left **{chosen_class['name']}**.", color=config.MAINCOLOR)
