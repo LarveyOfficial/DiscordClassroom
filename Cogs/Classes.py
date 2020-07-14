@@ -116,6 +116,9 @@ class Classes(commands.Cog):
         new_class = {'name': name, 'code': gen_code(), 'owner': ctx.author.id, 'members': [], 'assignments': []}
         config.CLASSES.insert_one(new_class)
 
+        if account['is_student']:
+            config.USERS.update({'user_id': ctx.author.id}, {'$set': {'is_student': False}})
+
         if account['teacher_notifications']:
             embed = discord.Embed(title="<a:bell:732103030488432720> Class Notification",
                                   description=f"You will receive notifications from your class {new_class['name']} [{new_class['code']}] and can be turned off at any time.",
