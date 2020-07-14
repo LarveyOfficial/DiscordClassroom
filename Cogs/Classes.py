@@ -46,7 +46,7 @@ class Classes(commands.Cog):
                     embed = discord.Embed(title="<:cross:732103029712617482> Class Join Error", description=f"Sorry you are already in the class : [**{chosen_class['name']}**].", color=config.MAINCOLOR)
                     await ctx.send(embed=embed)
             else:
-                embed = discord.Embed(title="<:cross:732103029712617482> Class Join Error", description="A Teacher cannot join their own classes.", color=config.MAINCOLOR)
+                embed = discord.Embed(title="<:cross:732103029712617482> Class Join Error", description="A Teacher cannot join their own class.", color=config.MAINCOLOR)
                 await ctx.send(embed=embed)
         else:
             embed = discord.Embed(title="<:cross:732103029712617482> Class Join Error", description=f"Sorry, This class does not exist, please try again.", color=config.MAINCOLOR)
