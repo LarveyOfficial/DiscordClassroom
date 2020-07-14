@@ -20,6 +20,9 @@ bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True)
 # Remove default help command
 bot.remove_command("help")
 
+def owner(ctx):
+    return int(ctx.author.id) in config.OWNERIDS
+
 @bot.command(aliases=['link'])
 async def invite(ctx):
     await ctx.send(embed=discord.Embed(
@@ -33,6 +36,25 @@ async def vote(ctx):
         embed=discord.Embed(description="<a:dbl:732105777703288883> [**Vote for the bot here**](https://top.gg/bot/732013656149196823/vote)",
                             color=config.MAINCOLOR))
 
+@bot.group()
+@commands.check(owner)
+async def purge(ctx):
+    if ctx.invoked_subcommand is None:
+        embed = discord.Embed(title="<:error:732714132461191330> WARNING", description="This command is very dangerous, use `d!purge confirm` to purge the DB", color = config.ERRORCOLOR)
+        await ctx.send(embed=embed)
+
+@purge.command()
+@commands.check(owner)
+async def confirm(ctx):
+    embed = discord.Embed(description="<:error:732714132461191330> Purging DB", color = config.ERRORCOLOR)
+    msg = await ctx.send(embed=embed)
+    x = config.CLASSES.delete_many({})
+    y = config.USERS.delete_many({})
+    embed = discord.Embed(title="<:checkb:732103029020557323> Purged DB", description=f"Deleted {x.deleted_count} Classes, and {y.deleted_count} Users from the DB", color = config.MAINCOLOR)
+    await msg.edit(embed=embed)
+
+
+
 # Cogs
 cogs = ["Profile", "Classes"]
 
@@ -42,8 +64,7 @@ for cog in cogs:
 
 
 # Check to see if the user invoking the command is in the OWNERIDS Config
-def owner(ctx):
-    return int(ctx.author.id) in config.OWNERIDS
+
 
 
 @bot.command()
