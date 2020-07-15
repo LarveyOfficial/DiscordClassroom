@@ -67,7 +67,7 @@ class Classes(commands.Cog):
                     embed.add_field(name="<:people:732103029565947934> Class Directory", value=mystring)
 
                     if ctx.author.id == the_class['owner']:
-                        
+                        embed.add_field(name="")
 
                     await ctx.send(embed=embed)
                 else:
