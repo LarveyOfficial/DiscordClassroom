@@ -5,7 +5,11 @@ import discord
 from discord.ext import commands
 import logging
 
+import utils
+
 print("Bot Writen By: KAJ7#0001, Larvey#0001")
+
+print(utils.get_file_version())
 
 logging.basicConfig(level=logging.INFO, format="DiscordClassroom [%(levelname)s] | %(message)s")
 
@@ -35,6 +39,16 @@ async def vote(ctx):
     await ctx.send(
         embed=discord.Embed(description="<a:dbl:732105777703288883> [**Vote for the bot here**](https://top.gg/bot/732013656149196823/vote)",
                             color=config.MAINCOLOR))
+
+@bot.command()
+async def version(ctx):
+    filev = utils.get_file_version()
+    gitv = utils.get_new_version()
+    if gitv != filev:
+        embed = discord.Embed(title=f"{utils.emoji('error')} You are out of date!", description=f"The Current version is **{gitv}**, and you are running **{filev}**\n[**Click Me to Update!**](https://github.com/LuisVervaet/DiscordClassroom)", color = config.ERRORCOLOR)
+    else:
+        embed = discord.Embed(title=f"{utils.emoji('check')} You are up to date!", color = config.MAINCOLOR)
+    await ctx.send(embed=embed)
 
 @bot.group()
 @commands.check(owner)

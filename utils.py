@@ -1,5 +1,7 @@
 import discord
 import config
+import io
+import requests
 
 
 def get_profile(user_id):
@@ -40,3 +42,16 @@ def emoji(emoji):
     except:
         theEmoji = emoji_dict['error']
     return(theEmoji)
+
+def get_file_version():
+    versionfile = open('version.txt',mode='r')
+    version = versionfile.read()
+    versionfile.close()
+    return version
+
+def get_new_version():
+    url = "https://raw.githubusercontent.com/LuisVervaet/DiscordClassroom/master/version.txt"
+    read_data=str(requests.get(url).content)
+    return_data=read_data.replace("b'","")
+    return_data = return_data[:-3]
+    return(return_data)
