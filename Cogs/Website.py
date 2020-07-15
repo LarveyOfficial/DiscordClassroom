@@ -8,7 +8,6 @@ import discord
 from discord.ext import commands
 
 import flask_discord
-from flask_pymongo import PyMongo
 from flask import url_for, session, Flask, redirect, render_template, request, flash
 import config
 from flask_discord import DiscordOAuth2Session
