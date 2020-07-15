@@ -53,7 +53,7 @@ class Classes(commands.Cog):
                         embed = discord.Embed(title=f"<:crown:732103028781613117> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: **You**\nClass Size: {str(len(the_class['members']))}", color = config.MAINCOLOR)
                     else:
                         embed = discord.Embed(title=f"<:inv:732103029213364295> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: <@{the_class['owner']}>\nClass size: {str(len(the_class['members']))}", color = config.MAINCOLOR)
-                    mystring = ""
+                    mystring = "No Students in class."
                     i = 1
                     for student in the_class['members']:
                         if i < len(the_class['members']):
