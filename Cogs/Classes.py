@@ -57,6 +57,8 @@ class Classes(commands.Cog):
                         mystring = f"No Students in class."
                         i = 1
                         for student in the_class['members']:
+                            if i == 1:
+                                mystring = ""
                             if i < len(the_class['members']):
                                 if i % 3 == 0 and i != 0:
                                     mystring += f"<@{student}>\n"

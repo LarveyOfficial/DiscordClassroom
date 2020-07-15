@@ -9,8 +9,8 @@ import utils
 
 print("Bot Writen By: KAJ7#0001, Larvey#0001")
 
-local_version = "v0.1.02a"
-update_text = "Testing version changelog text"
+local_version = "v0.1.03a"
+update_text = "\nFixed an issue where Class Directory would not display properly."
 
 logging.basicConfig(level=logging.INFO, format="DiscordClassroom [%(levelname)s] | %(message)s")
 
