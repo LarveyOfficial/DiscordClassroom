@@ -68,7 +68,7 @@ class Classes(commands.Cog):
 
                     if ctx.author.id == the_class['owner']:
                         emoji_dict = {True: "<:on:732103029624537109>", False: "<:off:732103029892841564>"}
-                        embed.add_field(name="<:settings:732811659118379008> Settings", inline=False, value=f"{emoji_dict[the_class['code_joining']]} Code joining\n{emoji_dict[the_class['notifications']]} Notifications\n{emoji_dict[the_class['google_classroom']]} Google Classroom Link\n{emoji_dict[account['premium']]} Premium Features\n\n*to toggle these values, type `d!class {the_class['code']} <value>*")
+                        embed.add_field(name="<:settings:732811659118379008> Settings", inline=False, value=f"{emoji_dict[the_class['code_joining']]} Code joining\n{emoji_dict[the_class['notifications']]} Notifications\n{emoji_dict[the_class['google_classroom']]} Google Classroom Link\n{emoji_dict[account['premium']]} Premium Features\n\n*to toggle these values, type `d!class {the_class['code']} <value>`*")
 
                     await ctx.send(embed=embed)
                 else:
