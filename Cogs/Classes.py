@@ -42,13 +42,17 @@ class Classes(commands.Cog):
             embed.description = "*Use `d!join` to join and `d!create` to create a class.*"
             await ctx.send(embed=embed)
         else:
-            the_class = config.CLASSES.find_one({'code' : code})
-            if the_class is not None:
+            the_class = config.CLASSES.find_one({'code': code})
+            if the_class is None:
+                embed = discord.Embed(title="<:cross:732103029712617482> That class does not exist",
+                                      color=config.MAINCOLOR)
+                await ctx.send(embed=embed)
+            else:
                 if ctx.author.id == the_class['owner'] or ctx.author.id in the_class['members']:
                     if ctx.author.id == the_class['owner']:
-                        embed = discord.Embed(title=f"<:crown:732103028781613117> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: **You**\n# of Students: {str(len(the_class['members']))}", color = config.MAINCOLOR)
+                        embed = discord.Embed(title=f"<:crown:732103028781613117> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: **You**\nClass Size: {str(len(the_class['members']))}", color = config.MAINCOLOR)
                     else:
-                        embed = discord.Embed(title=f"<:inv:732103029213364295> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: <@{the_class['owner']}>\n# of Students: {str(len(the_class['members']))}", color = config.MAINCOLOR)
+                        embed = discord.Embed(title=f"<:inv:732103029213364295> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: <@{the_class['owner']}>\nClass size: {str(len(the_class['members']))}", color = config.MAINCOLOR)
                     mystring = ""
                     i = 1
                     for student in the_class['members']:
@@ -60,11 +64,16 @@ class Classes(commands.Cog):
                         else:
                             mystring += f"<@{student}>"
                         i += 1
-                    embed.add_field(name="<:people:732103029565947934> Student Directory", value=mystring)
+                    embed.add_field(name="<:people:732103029565947934> Class Directory", value=mystring)
+
+                    if ctx.author.id == the_class['owner']:
+                        
+
                     await ctx.send(embed=embed)
-            else:
-                embed = discord.Embed(title="<:cross:732103029712617482> That class does not exist", color=config.MAINCOLOR)
-                await ctx.send(embed=embed)
+                else:
+                    embed = discord.Embed(title="<:cross:732103029712617482> That class does not exist",
+                                          color=config.MAINCOLOR)
+                    await ctx.send(embed=embed)
 
 
     @commands.command()
