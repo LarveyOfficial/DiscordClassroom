@@ -41,6 +41,12 @@ async def vote(ctx):
                             color=config.MAINCOLOR))
 
 @bot.command()
+async def repo(ctx):
+    await ctx.send(
+        embed=discord.Embed(description=utils.emoji('git') + " [**View Source code**](https://github.com/LuisVervaet/DiscordClassroom)",
+                            color=config.MAINCOLOR))
+
+@bot.command()
 async def version(ctx):
     current_version = utils.get_new_version()
     if current_version != local_version:

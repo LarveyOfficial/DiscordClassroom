@@ -37,7 +37,8 @@ def emoji(emoji):
                  "online": "<:online:732103028873756683>", "crown": "<:crown:732103028781613117>",
                  "minus": "<:minus:732103028726824982>", "dbl": "<a:dbl:732105777703288883>",
                  "loading": "<a:loading:732103030799073291>", "bell": "<a:bell:732103030488432720>",
-                 "error": "<:error:732714132461191330>", "settings": "<:settings:732811659118379008>"}
+                 "error": "<:error:732714132461191330>", "settings": "<:settings:732811659118379008>",
+                 "git": "<:git:733077008312959029>"}
     try:
         theEmoji = emoji_dict[emoji.lower()]
     except:
