@@ -21,8 +21,8 @@ class Classes(commands.Cog):
 
     @commands.command(aliases=['classes', 'c'], name="class")
     async def dash(self, ctx, code:str=None):
+        account, first_time = utils.get_profile(ctx.author.id)
         if code is None:
-            account, first_time = utils.get_profile(ctx.author.id)
             embed = discord.Embed(title="<:inv:732103029213364295> Your Classes",
                                   color=config.MAINCOLOR)
             for aclass in utils.get_teaching_classes(ctx.author.id):
@@ -67,7 +67,8 @@ class Classes(commands.Cog):
                     embed.add_field(name="<:people:732103029565947934> Class Directory", value=mystring)
 
                     if ctx.author.id == the_class['owner']:
-                        embed.add_field(name="")
+                        emoji_dict = {True: "<:on:732103029624537109>", False: "<:off:732103029892841564>"}
+                        embed.add_field(name="<:settings:732811659118379008> Settings", value=f"{emoji_dict[the_class['code_joining']]} Code joining\n{emoji_dict[the_class['notifications']]} Notifications\n{emoji_dict[the_class['google_classroom']]} Google Classroom Link\n{emoji_dict[account['premium']]} Premium Features\n\n*to toggle these values, type `d!class {the_class['code']} <value>*")
 
                     await ctx.send(embed=embed)
                 else:
@@ -86,9 +87,8 @@ class Classes(commands.Cog):
                     config.CLASSES.update_one({'code': code}, {'$push': {'members': ctx.author.id}})
                     embed=discord.Embed(title="<:plus:732103029435924491> Class Joined", description=f"You have enrolled in **{chosen_class['name']}**.\nYou can see information about the class by typing `d!class {chosen_class['code']}`", color=config.MAINCOLOR)
                     await ctx.send(embed=embed)
-                    teacher_account, first_time = utils.get_profile(chosen_class['owner'])
                     teacher = self.bot.get_user(chosen_class['owner'])
-                    if teacher is not None and teacher_account['teacher_notifications']:
+                    if teacher is not None and chosen_class['notifications']:
                         embed=discord.Embed(title="<a:bell:732103030488432720> Class Notification", description=f"A student named {ctx.author.name} ({str(ctx.author.id)}) has enrolled in {chosen_class['name']} [{chosen_class['code']}]", color=config.MAINCOLOR)
                         embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
                         await teacher.send(embed=embed)
@@ -118,9 +118,8 @@ class Classes(commands.Cog):
                 config.CLASSES.update_one({'code': code}, {'$pull': {'members': ctx.author.id}})
                 embed = discord.Embed(title="<:minus:732103028726824982> Left Class", description=f"You have left **{chosen_class['name']}**.", color=config.MAINCOLOR)
                 await ctx.send(embed=embed)
-                teacher_account, first_time = utils.get_profile(chosen_class['owner'])
                 teacher = self.bot.get_user(chosen_class['owner'])
-                if teacher is not None and teacher_account['teacher_notifications']:
+                if teacher is not None and chosen_class['notifications']:
                     embed=discord.Embed(title="<a:bell:732103030488432720> Class Notification", description=f"A Student named {ctx.author.name} ({str(ctx.author.id)}) has unenrolled from {chosen_class['name']} [{chosen_class['code']}]", color=config.MAINCOLOR)
                     embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
                     await teacher.send(embed=embed)
@@ -162,7 +161,7 @@ class Classes(commands.Cog):
                 await start_message.edit(embed=embed)
                 return
 
-        new_class = {'name': name, 'code': gen_code(), 'owner': ctx.author.id, 'members': [], 'assignments': []}
+        new_class = {'name': name, 'code': gen_code(), 'owner': ctx.author.id, 'members': [], 'assignments': [], 'code_joining': True, 'notifications': True, 'google_classroom': False}
         config.CLASSES.insert_one(new_class)
 
         embed = discord.Embed(title="<:checkb:732103029020557323> Class Created", color=config.MAINCOLOR, description=f"**{new_class['name']} [{new_class['code']}] has been created.**\n\nStudents can enroll by typing `d!join {new_class['code']}`.\nView more information with `d!class {new_class['code']}`")
