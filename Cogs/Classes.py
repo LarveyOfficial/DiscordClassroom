@@ -67,9 +67,7 @@ class Classes(commands.Cog):
                     embed.add_field(name="<:people:732103029565947934> Class Directory", value=mystring)
 
                     if ctx.author.id == the_class['owner']:
-                        
-
-                    await ctx.send(embed=embed)
+                        await ctx.send(embed=embed)
                 else:
                     embed = discord.Embed(title="<:cross:732103029712617482> That class does not exist",
                                           color=config.MAINCOLOR)
