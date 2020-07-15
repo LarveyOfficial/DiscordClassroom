@@ -9,7 +9,7 @@ import utils
 
 print("Bot Writen By: KAJ7#0001, Larvey#0001")
 
-local_version = "v0.1.1a"
+local_version = "v0.1.01a"
 
 logging.basicConfig(level=logging.INFO, format="DiscordClassroom [%(levelname)s] | %(message)s")
 
