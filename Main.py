@@ -9,8 +9,8 @@ import utils
 
 print("Bot Writen By: KAJ7#0001, Larvey#0001")
 
-local_version = "v0.1.03a"
-update_text = "\nFixed an issue where Class Directory would not display properly."
+local_version = "v0.1.04a"
+update_text = "Changed how the version command displays."
 
 logging.basicConfig(level=logging.INFO, format="DiscordClassroom [%(levelname)s] | %(message)s")
 
@@ -51,7 +51,8 @@ async def repo(ctx):
 async def version(ctx):
     current_version = utils.get_new_version()
     if current_version != local_version:
-        embed = discord.Embed(title=f"{utils.emoji('error')} You are out of date!", description=f"The Current version is **{current_version}**, and you are running **{local_version}**\n[**Click Me to Update!**](https://github.com/LuisVervaet/DiscordClassroom)\n\nChanges:\n{utils.get_new_version_text()}", color = config.ERRORCOLOR)
+        embed = discord.Embed(title=f"{utils.emoji('error')} Updates are available!", description=f"**{current_version}**\n\n{utils.get_new_version_text()}\n\n[**Click Me to Update!**](https://github.com/LuisVervaet/DiscordClassroom)", color = config.ERRORCOLOR)
+        embed.set_footer(text="This bot is running " + local_version)
     else:
         embed = discord.Embed(title=f"{utils.emoji('check')} You are up to date!", color = config.MAINCOLOR)
     await ctx.send(embed=embed)
