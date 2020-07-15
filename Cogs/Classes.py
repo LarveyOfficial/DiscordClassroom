@@ -285,5 +285,46 @@ class Classes(commands.Cog):
                              icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
             await ctx.author.send(embed=embed)
 
+    @commands.command()
+    async def announce(self, ctx, code: str=None, *, message: str=None):
+        if code is None:
+            embed = discord.Embed(title=f"{utils.emoji('cross')} Please specify a class code.", color = config.MAINCOLOR)
+            await ctx.send(embed = embed)
+        else:
+            chosen_class = config.CLASSES.find_one({'code': code})
+            if message is None:
+                embed = discord.Embed(title=f"{utils.emoji('cross')} Please specify a message.", color = config.MAINCOLOR)
+                await ctx.send(embed = embed)
+            else:
+                if len(message) > 2000:
+                    embed = discord.Embed(title=f"{utils.emoji('cross')} Message has passed the 2000 character limit.", color = config.MAINCOLOR)
+                    await ctx.send(embed = embed)
+                else:
+                    if chosen_class is None:
+                        embed = discord.Embed(title=f"{utils.emoji('cross')} This class does not exist.", color = config.MAINCOLOR)
+                        await ctx.send(embed = embed)
+                    else:
+                        if chosen_class['owner'] != ctx.author.id and ctx.author.id in chosen_class['members']:
+                            embed = discord.Embed(title=f"{utils.emoji('cross')} Only the teacher can send an announcement.", color = config.MAINCOLOR)
+                            await ctx.send(embed = embed)
+                        elif chosen_class['owner'] == ctx.author.id:
+                            if len(chosen_class['members']) == 0:
+                                embed = discord.Embed(title=f"{utils.emoji('cross')} There are no students in this class.", color = config.MAINCOLOR)
+                                await ctx.send(embed = embed)
+                            else:
+                                embed = discord.Embed(title=f"{utils.emoji('announce')} Teacher Announcement",description=f"Your Teacher has sent the following announcement:\n\n{message}", color = config.MAINCOLOR)
+                                i = 0
+                                for member in chosen_class['members']:
+                                    user = discord.utils.get(self.bot.get_all_members(), id=member)
+                                    await user.send(embed=embed)
+                                    i += 1
+                                embed = discord.Embed(title=f"{utils.emoji('checkb')} Teacher Announcement", description=f"Announcement sent to {i} student(s).",color=config.MAINCOLOR)
+                                await ctx.send(embed=embed)
+                        else:
+                            embed = discord.Embed(title=f"{utils.emoji('cross')} This class does not exist.", color = config.MAINCOLOR)
+                            await ctx.send(embed = embed)
+
+
+
 def setup(bot):
     bot.add_cog(Classes(bot))
