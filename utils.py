@@ -2,6 +2,7 @@ import discord
 import config
 import io
 import requests
+from bs4 import BeautifulSoup
 
 
 def get_profile(user_id):
@@ -43,11 +44,6 @@ def emoji(emoji):
         theEmoji = emoji_dict['error']
     return(theEmoji)
 
-def get_file_version():
-    versionfile = open('version.txt',mode='r')
-    version = versionfile.read()
-    versionfile.close()
-    return version
 
 def get_new_version():
     url = "https://raw.githubusercontent.com/LuisVervaet/DiscordClassroom/master/version.txt"
