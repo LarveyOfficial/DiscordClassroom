@@ -20,7 +20,7 @@ class Classes(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['classes', 'c'], name="class")
-    async def dash(self, ctx, code:str=None):
+    async def dash(self, ctx, code:str=None, *, value:str=None):
         account, first_time = utils.get_profile(ctx.author.id)
         if code is None:
             embed = discord.Embed(title="<:inv:732103029213364295> Your Classes",
@@ -48,33 +48,57 @@ class Classes(commands.Cog):
                                       color=config.MAINCOLOR)
                 await ctx.send(embed=embed)
             else:
-                if ctx.author.id == the_class['owner'] or ctx.author.id in the_class['members']:
-                    if ctx.author.id == the_class['owner']:
-                        embed = discord.Embed(title=f"<:crown:732103028781613117> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: **You**\nClass Size: {str(len(the_class['members']))}", color = config.MAINCOLOR)
-                    else:
-                        embed = discord.Embed(title=f"<:inv:732103029213364295> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: <@{the_class['owner']}>\nClass size: {str(len(the_class['members']))}", color = config.MAINCOLOR)
-                    mystring = "No Students in class."
-                    i = 1
-                    for student in the_class['members']:
-                        if i < len(the_class['members']):
-                            if i % 3 == 0 and i != 0:
-                                mystring += f"<@{student}>\n"
-                            else:
-                                mystring += f"<@{student}>, "
+                if value is None:
+                    if ctx.author.id == the_class['owner'] or ctx.author.id in the_class['members']:
+                        if ctx.author.id == the_class['owner']:
+                            embed = discord.Embed(title=f"<:crown:732103028781613117> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: **You**\nClass Size: {str(len(the_class['members']))}", color = config.MAINCOLOR)
                         else:
-                            mystring += f"<@{student}>"
-                        i += 1
-                    embed.add_field(name="<:people:732103029565947934> Class Directory", value=mystring)
+                            embed = discord.Embed(title=f"<:inv:732103029213364295> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: <@{the_class['owner']}>\nClass size: {str(len(the_class['members']))}", color = config.MAINCOLOR)
+                        mystring = "No Students in class."
+                        i = 1
+                        for student in the_class['members']:
+                            if i < len(the_class['members']):
+                                if i % 3 == 0 and i != 0:
+                                    mystring += f"<@{student}>\n"
+                                else:
+                                    mystring += f"<@{student}>, "
+                            else:
+                                mystring += f"<@{student}>"
+                            i += 1
+                        embed.add_field(name="<:people:732103029565947934> Class Directory", value=mystring)
 
-                    if ctx.author.id == the_class['owner']:
-                        emoji_dict = {True: "<:on:732103029624537109>", False: "<:off:732103029892841564>"}
-                        embed.add_field(name="<:settings:732811659118379008> Settings", inline=False, value=f"{emoji_dict[the_class['code_joining']]} Code joining\n{emoji_dict[the_class['notifications']]} Notifications\n{emoji_dict[the_class['google_classroom']]} Google Classroom Link\n{emoji_dict[account['premium']]} Premium Features\n\n*to toggle these values, type `d!class {the_class['code']} <value>`*")
+                        if ctx.author.id == the_class['owner']:
+                            emoji_dict = {True: "<:on:732103029624537109>", False: "<:off:732103029892841564>"}
+                            embed.add_field(name="<:settings:732811659118379008> Settings", inline=False, value=f"{emoji_dict[the_class['code_joining']]} Code joining\n{emoji_dict[the_class['notifications']]} Notifications\n{emoji_dict[the_class['google_classroom']]} Google Classroom Link\n{emoji_dict[account['premium']]} Premium Features\n\n*to toggle these values, type `d!class {the_class['code']} <value>`*")
 
-                    await ctx.send(embed=embed)
+                        await ctx.send(embed=embed)
+                    else:
+                        embed = discord.Embed(title="<:cross:732103029712617482> That class does not exist",
+                                              color=config.MAINCOLOR)
+                        await ctx.send(embed=embed)
                 else:
-                    embed = discord.Embed(title="<:cross:732103029712617482> That class does not exist",
-                                          color=config.MAINCOLOR)
-                    await ctx.send(embed=embed)
+                    value_dict = {"joining": "code_joining", "notifications": "notifications", "gclassroom": "google_classroom"}
+                    value = value.lower()
+                    values = {"joining", "notifications", "gclassroom"}
+                    if ctx.author.id == the_class['owner']:
+                        if value in values:
+                            if the_class[value_dict[value]] == True:
+                                config.CLASSES.update_one({'code': code}, {'$set': {value_dict[value]: False}})
+                                embed = discord.Embed(title=f"<:off:732103029892841564> Setting **{value}** was turned Off.", color = config.MAINCOLOR)
+                            else:
+                                config.CLASSES.update_one({'code': code}, {'$set': {value_dict[value]: True}})
+                                embed = discord.Embed(title=f"<:on:732103029624537109> Setting **{value}** was turned On.", color = config.MAINCOLOR)
+                            await ctx.send(embed=embed)
+                        else:
+                            embed = discord.Embed(title="<:cross:732103029712617482> That value does not Exist.",description="Please try one of the following\nJoining,\nNotifications,\nGClassroom", color = config.MAINCOLOR)
+                            await ctx.send(embed=embed)
+                    elif ctx.author.id in the_class['members']:
+                        embed = discord.Embed(title="<:cross:732103029712617482> Only the Teacher can change values.", color = config.MAINCOLOR)
+                        await ctx.send(embed=embed)
+                    else:
+                        embed = discord.Embed(title="<:cross:732103029712617482> That class does not exist", color = config.MAINCOLOR)
+                        await ctx.send(embed=embed)
+
 
 
     @commands.command()
@@ -83,18 +107,23 @@ class Classes(commands.Cog):
         chosen_class = config.CLASSES.find_one({'code': code})
         if chosen_class is not None:
             if chosen_class['owner'] != ctx.author.id:
-                if ctx.author.id not in chosen_class['members']:
-                    config.CLASSES.update_one({'code': code}, {'$push': {'members': ctx.author.id}})
-                    embed=discord.Embed(title="<:plus:732103029435924491> Class Joined", description=f"You have enrolled in **{chosen_class['name']}**.\nYou can see information about the class by typing `d!class {chosen_class['code']}`", color=config.MAINCOLOR)
-                    await ctx.send(embed=embed)
-                    teacher = self.bot.get_user(chosen_class['owner'])
-                    if teacher is not None and chosen_class['notifications']:
-                        embed=discord.Embed(title="<a:bell:732103030488432720> Class Notification", description=f"A student named {ctx.author.name} ({str(ctx.author.id)}) has enrolled in {chosen_class['name']} [{chosen_class['code']}]", color=config.MAINCOLOR)
-                        embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
-                        await teacher.send(embed=embed)
+                if chosen_class['code_joining']:
+                    if ctx.author.id not in chosen_class['members']:
+                        config.CLASSES.update_one({'code': code}, {'$push': {'members': ctx.author.id}})
+                        embed=discord.Embed(title="<:plus:732103029435924491> Class Joined", description=f"You have enrolled in **{chosen_class['name']}**.\nYou can see information about the class by typing `d!class {chosen_class['code']}`", color=config.MAINCOLOR)
+                        await ctx.send(embed=embed)
+                        teacher = self.bot.get_user(chosen_class['owner'])
+                        if teacher is not None and chosen_class['notifications']:
+                            embed=discord.Embed(title="<a:bell:732103030488432720> Class Notification", description=f"A student named {ctx.author.name} ({str(ctx.author.id)}) has enrolled in {chosen_class['name']} [{chosen_class['code']}]", color=config.MAINCOLOR)
+                            embed.set_footer(text="to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
+                            await teacher.send(embed=embed)
+                    else:
+                        embed = discord.Embed(title="<:cross:732103029712617482> You are already enrolled in this class", color=config.MAINCOLOR)
+                        await ctx.send(embed=embed)
                 else:
-                    embed = discord.Embed(title="<:cross:732103029712617482> You are already enrolled in this class", color=config.MAINCOLOR)
+                    embed = discord.Embed(title="<:cross:732103029712617482> That class does not exist", color=config.MAINCOLOR)
                     await ctx.send(embed=embed)
+
             else:
                 embed = discord.Embed(title="<:cross:732103029712617482> A Teacher cannot join their own class", color=config.MAINCOLOR)
                 await ctx.send(embed=embed)
