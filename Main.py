@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format="DiscordClassroom [%(levelname)s]
 
 
 async def get_prefix(bot, message):
-    return commands.when_mentioned_or("d!")(bot, message)
+    return commands.when_mentioned_or("c!")(bot, message)
 
 
 # Set prefix and set case insensitive to true so the a command will work if miscapitlized

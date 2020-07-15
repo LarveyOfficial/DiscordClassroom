@@ -20,26 +20,52 @@ class Classes(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['classes', 'c'], name="class")
-    async def dash(self, ctx):
-        account, first_time = utils.get_profile(ctx.author.id)
-        embed = discord.Embed(title="<:inv:732103029213364295> Your Classes",
-                              color=config.MAINCOLOR)
-        for aclass in utils.get_teaching_classes(ctx.author.id):
-            classname = aclass['name']
-            classcode = aclass['code']
-            classowner = aclass['owner']
-            embed.add_field(name="<:crown:732103028781613117> " + classname + " [" + classcode + "]",
-                            value="Teacher: **You**\nStudents: " + str(len(aclass['members'])) + "\n",
-                            inline=True)
-        for aclass in utils.get_user_classes(ctx.author.id):
-            classname = aclass['name']
-            classcode = aclass['code']
-            classowner = aclass['owner']
-            embed.add_field(name="<:enter:732105777577459723> " + classname + " [" + classcode + "]",
-                            value="Teacher: <@" + str(classowner) + ">\nClassmates: " + str(len(aclass['members'])) + "\n",
-                            inline=True)
-        embed.description = "*Use `d!join` to join and `d!create` to create a class.*"
-        await ctx.send(embed=embed)
+    async def dash(self, ctx, code:str=None):
+        if code is None:
+            account, first_time = utils.get_profile(ctx.author.id)
+            embed = discord.Embed(title="<:inv:732103029213364295> Your Classes",
+                                  color=config.MAINCOLOR)
+            for aclass in utils.get_teaching_classes(ctx.author.id):
+                classname = aclass['name']
+                classcode = aclass['code']
+                classowner = aclass['owner']
+                embed.add_field(name="<:crown:732103028781613117> " + classname + " [" + classcode + "]",
+                                value="Teacher: **You**\nStudents: " + str(len(aclass['members'])) + "\n",
+                                inline=True)
+            for aclass in utils.get_user_classes(ctx.author.id):
+                classname = aclass['name']
+                classcode = aclass['code']
+                classowner = aclass['owner']
+                embed.add_field(name="<:enter:732105777577459723> " + classname + " [" + classcode + "]",
+                                value="Teacher: <@" + str(classowner) + ">\nClassmates: " + str(len(aclass['members'])) + "\n",
+                                inline=True)
+            embed.description = "*Use `d!join` to join and `d!create` to create a class.*"
+            await ctx.send(embed=embed)
+        else:
+            the_class = config.CLASSES.find_one({'code' : code})
+            if the_class is not None:
+                if ctx.author.id == the_class['owner'] or ctx.author.id in the_class['members']:
+                    if ctx.author.id == the_class['owner']:
+                        embed = discord.Embed(title=f"<:crown:732103028781613117> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: **You**\n# of Students: {str(len(the_class['members']))}", color = config.MAINCOLOR)
+                    else:
+                        embed = discord.Embed(title=f"<:inv:732103029213364295> {the_class['name']} Info [**{the_class['code']}**]",description=f"Teacher: <@{the_class['owner']}>\n# of Students: {str(len(the_class['members']))}", color = config.MAINCOLOR)
+                    mystring = ""
+                    i = 1
+                    for student in the_class['members']:
+                        if i < len(the_class['members']):
+                            if i % 3 == 0 and i != 0:
+                                mystring += f"<@{student}>\n"
+                            else:
+                                mystring += f"<@{student}>, "
+                        else:
+                            mystring += f"<@{student}>"
+                        i += 1
+                    embed.add_field(name="<:people:732103029565947934> Student Directory", value=mystring)
+                    await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(title="<:cross:732103029712617482> That class does not exist", color=config.MAINCOLOR)
+                await ctx.send(embed=embed)
+
 
     @commands.command()
     async def join(self, ctx, code:str=None):
