@@ -9,8 +9,8 @@ import utils
 
 print("Bot Writen By: KAJ7#0001, Larvey#0001")
 
-local_version = "v0.1.04a"
-update_text = "Changed how the version command displays."
+local_version = "v0.1.05a"
+update_text = "Web server foundation."
 
 logging.basicConfig(level=logging.INFO, format="DiscordClassroom [%(levelname)s] | %(message)s")
 
@@ -77,7 +77,7 @@ async def confirm(ctx):
 
 
 # Cogs
-cogs = ["Profile", "Classes"]
+cogs = ["Profile", "Classes", "Website"]
 
 # Starts all cogs
 for cog in cogs:

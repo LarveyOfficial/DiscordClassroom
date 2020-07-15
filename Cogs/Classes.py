@@ -171,8 +171,8 @@ class Classes(commands.Cog):
             embed = discord.Embed(title=f"{utils.emoji('cross')} Please specify a class code.", color=config.MAINCOLOR)
             await ctx.send(embed=embed)
 
-    @commands.command(aliases=['kick','rem'])
-    async def remove(self, ctx, code:str=None, *, user: discord.Member = None):
+    @commands.command(aliases=['kick', 'rem'])
+    async def remove(self, ctx, code: str = None, *, user: discord.Member = None):
         if code is not None:
             chosen_class = config.CLASSES.find_one({'code': code})
             if chosen_class is not None:
@@ -213,7 +213,6 @@ class Classes(commands.Cog):
 
     @commands.command()
     async def leave(self, ctx, code:str=None):
-        account, first_time = utils.get_profile(ctx.author.id)
         chosen_class = config.CLASSES.find_one({'code': code})
         if chosen_class is not None:
 
