@@ -26,8 +26,6 @@ class Website(commands.Cog):
         self.discordOA = DiscordOAuth2Session(self.app)
         self.app.secret_key = "super_hot_kangaroo_panda_ew"
 
-
-    @tasks.loop()
     async def web_server(self):
         logging.info("Starting webserver on port 6969")
         port = int(os.environ.get('PORT', 6969))
@@ -38,7 +36,7 @@ class Website(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        self.web_server.start()
+        self.bot.loop.create_task(self.web_server())
 
     def home(self):
         return "Discord classroom website its so good thanks for visiting."
