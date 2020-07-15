@@ -5,7 +5,7 @@ import pymongo
 import asyncio
 import config
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 import flask_discord
 from flask import url_for, session, Flask, redirect, render_template, request, flash
@@ -26,14 +26,19 @@ class Website(commands.Cog):
         self.discordOA = DiscordOAuth2Session(self.app)
         self.app.secret_key = "super_hot_kangaroo_panda_ew"
 
-    @commands.Cog.listener()
-    async def on_ready(self):
+
+    @tasks.loop()
+    async def web_server(self):
         logging.info("Starting webserver on port 6969")
         port = int(os.environ.get('PORT', 6969))
 
         self.app.add_url_rule('/', 'home', view_func=self.home)
 
         self.app.run(host="0.0.0.0", port=port, debug=True)
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        self.web_server.start()
 
     def home(self):
         return "Discord classroom website its so good thanks for visiting."
