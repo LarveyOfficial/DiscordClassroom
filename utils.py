@@ -53,3 +53,12 @@ def get_new_version():
     text = text.find('span', {'class':"pl-s"}).text
     text = text.replace('"',"")
     return text
+
+
+def get_new_version_text():
+    url = requests.get("https://github.com/LuisVervaet/DiscordClassroom/blob/master/Main.py")
+    soup = BeautifulSoup(url.content, "html.parser")
+    text = soup.find('td', {'id':"LC13"})
+    text = text.find('span', {'class':"pl-s"}).text
+    text = text.replace('"',"")
+    return text
