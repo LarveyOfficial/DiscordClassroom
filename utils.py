@@ -46,8 +46,9 @@ def emoji(emoji):
 
 
 def get_new_version():
-    url = "https://raw.githubusercontent.com/LuisVervaet/DiscordClassroom/master/version.txt"
-    read_data=str(requests.get(url).content)
-    return_data=read_data.replace("b'","")
-    return_data = return_data[:-3]
-    return(return_data)
+    url = requests.get("https://github.com/LuisVervaet/DiscordClassroom/blob/master/Main.py")
+    soup = BeautifulSoup(url.content, "html.parser")
+    text = soup.find('td', {'id':"LC12"})
+    text = text.find('span', {'class':"pl-s"}).text
+    text = text.replace('"',"")
+    return text
