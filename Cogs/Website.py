@@ -12,6 +12,7 @@ from flask import url_for, session, Flask, redirect, render_template, request, f
 import config
 from flask_discord import DiscordOAuth2Session
 import utils
+import threading
 
 
 class Website(commands.Cog):
@@ -25,8 +26,9 @@ class Website(commands.Cog):
 
         self.discordOA = DiscordOAuth2Session(self.app)
         self.app.secret_key = "super_hot_kangaroo_panda_ew"
+        self.web_server_thread = None
 
-    async def web_server(self):
+    def web_server(self):
         logging.info("Starting webserver on port 6969")
         port = int(os.environ.get('PORT', 6969))
 
@@ -36,7 +38,8 @@ class Website(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        self.bot.loop.create_task(self.web_server())
+        self.web_server_thread = threading.Thread(target=self.web_server())
+        self.web_server_thread.start()
 
     def home(self):
         return "Discord classroom website its so good thanks for visiting."
