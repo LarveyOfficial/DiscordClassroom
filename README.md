@@ -19,8 +19,8 @@ Create and manage many classrooms all on discord. Connect to google classroom an
  
  
  ## Class management commands:
- > d!add <user> - add a user to your class
+ > `d!add <user>` - add a user to your class
   
- > d!remove <user> - remove a user from your class
+ > `d!remove <user>` - remove a user from your class
   
- > d!class <code> <value> - toggle a settings value for a class that you teach
+ > `d!class <code> <value>` - toggle a settings value for a class that you teach
