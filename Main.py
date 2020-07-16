@@ -9,8 +9,8 @@ import utils
 
 print("Bot Writen By: KAJ7#0001, Larvey#0001")
 
-local_version = "v0.1.05a"
-update_text = "Web server foundation."
+local_version = "v0.1.07a"
+update_text = "New notification system to work better with website integration."
 
 logging.basicConfig(level=logging.INFO, format="DiscordClassroom [%(levelname)s] | %(message)s")
 

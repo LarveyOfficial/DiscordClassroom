@@ -12,6 +12,13 @@ class Notifications(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    def unload_cog(self):
+        self.send_notifications.cancel()
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        self.send_notifications.start()
+
     @tasks.loop(seconds=30)
     async def send_notifications(self):
         to_delete = []
