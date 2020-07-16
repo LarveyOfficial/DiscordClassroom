@@ -19,7 +19,7 @@ class Notifications(commands.Cog):
     async def on_ready(self):
         self.send_notifications.start()
 
-    @tasks.loop(seconds=30)
+    @tasks.loop(seconds=10)
     async def send_notifications(self):
         to_delete = []
         # loop through all recent notifications
