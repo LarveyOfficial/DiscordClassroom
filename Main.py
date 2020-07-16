@@ -77,7 +77,7 @@ async def confirm(ctx):
 
 
 # Cogs
-cogs = ["Profile", "Classes", "Website"]
+cogs = ["Profile", "Classes"]
 
 # Starts all cogs
 for cog in cogs:
