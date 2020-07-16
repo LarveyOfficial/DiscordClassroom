@@ -68,8 +68,9 @@ class Classes(commands.Cog):
                             else:
                                 mystring += f"<@{student}>"
                             i += 1
+                        if the_class['code_joining']:
+                            embed.add_field(name=f"{utils.emoji('enter')} Quick Join", inline=False, value=f"[**Invite Link**](https://discordclassroom.com/{the_class['code']})")
                         embed.add_field(name=f"{utils.emoji('people')} Class Directory", value=mystring)
-
                         if ctx.author.id == the_class['owner']:
                             emoji_dict = {True: f"{utils.emoji('on')}", False: f"{utils.emoji('off')}"}
                             embed.add_field(name=f"{utils.emoji('settings')} Settings", inline=False, value=f"{emoji_dict[the_class['code_joining']]} Code joining\n{emoji_dict[the_class['notifications']]} Notifications\n{emoji_dict[the_class['google_classroom']]} Google Classroom Link\n{emoji_dict[account['premium']]} Premium Features\n\n*to toggle these values, type `d!class {the_class['code']} <value>`*")
