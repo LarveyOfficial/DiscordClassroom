@@ -36,7 +36,7 @@ class Notifications(commands.Cog):
                 if notification['footer'] is not None:
                     embed.set_footer(text=notification['footer'])
                 if notification['footer_icon'] is not None:
-                    embed.set_footer(text=embed.footer, icon_url=notification['footer_icon'])
+                    embed.set_footer(text=embed.footer.text, icon_url=notification['footer_icon'])
 
                 # send embed and wait to not abuse API
                 await user.send(embed=embed)

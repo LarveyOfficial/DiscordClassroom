@@ -9,8 +9,8 @@ import utils
 
 print("Bot Writen By: KAJ7#0001, Larvey#0001")
 
-local_version = "v0.1.07a"
-update_text = "New notification system to work better with website integration."
+local_version = "v0.1.08a"
+update_text = "fix issue with notification embed footer text."
 
 logging.basicConfig(level=logging.INFO, format="DiscordClassroom [%(levelname)s] | %(message)s")
 
