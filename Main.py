@@ -92,6 +92,9 @@ for cog in cogs:
 @commands.check(owner)
 async def restart(ctx):
     await ctx.send("Force Restarting...")
+    await bot.change_presence(
+        activity=discord.Activity(type=discord.ActivityType.watching, name="Restarting, hold on..."),
+        status=discord.Status.dnd)
     sys.exit()
 
 # Restarts and reloads all cogs
@@ -148,7 +151,8 @@ async def on_command_error(ctx, error):
 async def on_ready():
     logging.info(f"Bot has started succesfully in {len(bot.guilds)} server(s) with {len(bot.users)} users!")
     await bot.change_presence(
-        activity=discord.Activity(type=discord.ActivityType.watching, name="Bot Restarted!"))
+        activity=discord.Activity(type=discord.ActivityType.watching, name="Bot Restarted!"),
+        status=discord.Status.online)
     await asyncio.sleep(5)
     await bot.change_presence(activity=None)
 
