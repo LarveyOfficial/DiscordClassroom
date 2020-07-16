@@ -68,12 +68,12 @@ class Classes(commands.Cog):
                             else:
                                 mystring += f"<@{student}>"
                             i += 1
-                        if the_class['code_joining']:
-                            embed.add_field(name=f"{utils.emoji('enter')} Quick Join", inline=False, value=f"[**Invite Link**](https://discordclassroom.com/{the_class['code']})")
+                        if the_class['link_joining']:
+                            embed.add_field(name=f"{utils.emoji('enter')} Link Join", inline=False, value=f"[**Invite Link**](https://discordclassroom.com/{the_class['code']})")
                         embed.add_field(name=f"{utils.emoji('people')} Class Directory", value=mystring)
                         if ctx.author.id == the_class['owner']:
                             emoji_dict = {True: f"{utils.emoji('on')}", False: f"{utils.emoji('off')}"}
-                            embed.add_field(name=f"{utils.emoji('settings')} Settings", inline=False, value=f"{emoji_dict[the_class['code_joining']]} Code joining\n{emoji_dict[the_class['notifications']]} Notifications\n{emoji_dict[the_class['google_classroom']]} Google Classroom Link\n{emoji_dict[account['premium']]} Premium Features\n\n*to toggle these values, type `d!class {the_class['code']} <value>`*")
+                            embed.add_field(name=f"{utils.emoji('settings')} Settings", inline=False, value=f"{emoji_dict[the_class['code_joining']]} Code joining\n{emoji_dict[the_class['link_joining']]} Link Joining\n{emoji_dict[the_class['notifications']]} Notifications\n{emoji_dict[the_class['google_classroom']]} Google Classroom Link\n{emoji_dict[account['premium']]} Premium Features\n\n*to toggle these values, type `d!class {the_class['code']} <value>`*")
 
                         await ctx.send(embed=embed)
                     else:
@@ -81,9 +81,9 @@ class Classes(commands.Cog):
                                               color=config.MAINCOLOR)
                         await ctx.send(embed=embed)
                 else:
-                    value_dict = {"joining": "code_joining", "notifications": "notifications", "gclassroom": "google_classroom"}
+                    value_dict = {"joining": "code_joining", "link": "link_joining", "notifications": "notifications", "gclassroom": "google_classroom"}
                     value = value.lower()
-                    values = {"joining", "notifications", "gclassroom"}
+                    values = {"joining", "notifications", "gclassroom", "link"}
                     if ctx.author.id == the_class['owner']:
                         if value in values:
                             if the_class[value_dict[value]] == True:
@@ -285,7 +285,7 @@ class Classes(commands.Cog):
                 await start_message.edit(embed=embed)
                 return
 
-        new_class = {'name': name, 'code': gen_code(), 'owner': ctx.author.id, 'members': [], 'assignments': [], 'code_joining': True, 'notifications': True, 'google_classroom': False}
+        new_class = {'name': name, 'code': gen_code(), 'owner': ctx.author.id, 'members': [], 'assignments': [], 'code_joining': True, 'link_joining': True, 'notifications': True, 'google_classroom': False}
         config.CLASSES.insert_one(new_class)
 
         embed = discord.Embed(title=f"{utils.emoji('checkb')} Class Created", color=config.MAINCOLOR, description=f"**{new_class['name']} [{new_class['code']}] has been created.**\n\nStudents can enroll by typing `d!join {new_class['code']}` or visiting https://discordclassroom.com/{new_class['code']}.\nView more information with `d!class {new_class['code']}`")
