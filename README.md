@@ -18,7 +18,9 @@ Create and manage many classrooms all on discord. Connect to google classroom an
  > `d!leave <code>` - leave a class that you do not teach
  
  
- Class management commands:
- - d!add <user> - add a user to your class
- - d!remove <user> - remove a user from your class
- - d!class <code> <value> - toggle a settings value for a class that you teach
+ ## Class management commands:
+ > d!add <user> - add a user to your class
+  
+ > d!remove <user> - remove a user from your class
+  
+ > d!class <code> <value> - toggle a settings value for a class that you teach
