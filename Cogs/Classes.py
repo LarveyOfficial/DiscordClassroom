@@ -287,7 +287,7 @@ class Classes(commands.Cog):
         new_class = {'name': name, 'code': gen_code(), 'owner': ctx.author.id, 'members': [], 'assignments': [], 'code_joining': True, 'notifications': True, 'google_classroom': False}
         config.CLASSES.insert_one(new_class)
 
-        embed = discord.Embed(title=f"{utils.emoji('checkb')} Class Created", color=config.MAINCOLOR, description=f"**{new_class['name']} [{new_class['code']}] has been created.**\n\nStudents can enroll by typing `d!join {new_class['code']}`.\nView more information with `d!class {new_class['code']}`")
+        embed = discord.Embed(title=f"{utils.emoji('checkb')} Class Created", color=config.MAINCOLOR, description=f"**{new_class['name']} [{new_class['code']}] has been created.**\n\nStudents can enroll by typing `d!join {new_class['code']}` or visiting https://discordclassroom.com/{new_class['code']}.\nView more information with `d!class {new_class['code']}`")
         await ctx.send(embed=embed)
 
         if account['is_student']:
