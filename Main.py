@@ -9,8 +9,7 @@ import utils
 
 print("Bot Writen By: KAJ7#0001, Larvey#0001")
 
-local_version = "v0.1.13a"
-update_text = "Show links for newly created classes."
+local_version = "v0.1.14a"
 
 logging.basicConfig(level=logging.INFO, format="DiscordClassroom [%(levelname)s] | %(message)s")
 
