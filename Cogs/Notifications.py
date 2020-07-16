@@ -43,7 +43,7 @@ class Notifications(commands.Cog):
                 await asyncio.sleep(1)
 
         # delete all notifications sent
-        config.NOTIFICATIONS.delete_many({'_id': {'$in': x['_id'] for x in to_delete}})
+        config.NOTIFICATIONS.delete_many({'date': {'$in': x['date'] for x in to_delete}})
 
 
 
