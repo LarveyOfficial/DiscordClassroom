@@ -51,7 +51,7 @@ async def repo(ctx):
 async def version(ctx):
     current_version = utils.get_new_version()
     if current_version != local_version:
-        embed = discord.Embed(title=f"{utils.emoji('error')} Updates are available!", description=f"**{current_version}**\n\n{utils.get_new_version_text()}\n\n[**Click Me to Update!**](https://github.com/LuisVervaet/DiscordClassroom)", color = config.ERRORCOLOR)
+        embed = discord.Embed(title=f"{utils.emoji('cloud')} Updates are available!", description=f"**{current_version}**\n\n{utils.get_new_version_text()}\n\n[**Click Me to Update!**](https://github.com/LuisVervaet/DiscordClassroom)", color = config.ERRORCOLOR)
         embed.set_footer(text="This bot is running " + local_version)
     else:
         embed = discord.Embed(title=f"{utils.emoji('check')} You are up to date!", color = config.MAINCOLOR)
@@ -94,7 +94,7 @@ async def restart(ctx):
     await ctx.send("Force Restarting...")
     await bot.change_presence(
         activity=discord.Activity(type=discord.ActivityType.watching, name="Restarting, hold on..."),
-        status=discord.Status.dnd)
+        status=discord.Status.idle)
     sys.exit()
 
 # Restarts and reloads all cogs
