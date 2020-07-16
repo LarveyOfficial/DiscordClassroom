@@ -40,7 +40,7 @@ class Profile(commands.Cog):
                 await start_message.edit(embed=embed)
                 return
         config.USERS.update({'user_id': ctx.author.id}, {'$set': {'note': note}})
-        await ctx.send(embed=discord.Embed(title=f"{utils.emoji('checkb')}> Note has been changed!"))
+        await ctx.send(embed=discord.Embed(title=f"{utils.emoji('checkb')} Note has been changed!"))
 
     @commands.command(aliases=['p', 'user'])
     async def profile(self, ctx, user: discord.Member = None):
