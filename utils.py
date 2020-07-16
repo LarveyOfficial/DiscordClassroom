@@ -58,9 +58,14 @@ def get_new_version():
 
 
 def get_new_version_text():
-    url = requests.get("https://github.com/LuisVervaet/DiscordClassroom/blob/master/Main.py")
+    url = requests.get("https://github.com/LuisVervaet/DiscordClassroom")
     soup = BeautifulSoup(url.content, "html.parser")
-    text = soup.find('td', {'id': "LC13"})
-    text = text.find('span', {'class': "pl-s"}).text
-    text = text.replace('"', "")
+    text = soup.find('main', {'id': "js-repo-pjax-container"})
+    text = text.find('div', {'class': 'Box mb-3'})
+    text = text.find('div', {'class': 'Box-header Box-header--blue position-relative'})
+    text = text.find('div', {'class': 'js-details-container Details d-flex rounded-top-1 flex-items-center flex-wrap'})
+    text = text.find('div', {'class': 'flex-1 d-flex flex-items-center ml-3 min-width-0'})
+    text = text.find('div', {'class': 'css-truncate css-truncate-overflow text-gray'})
+    text = text.find('span', {'class': 'd-none d-sm-inline'})
+    text = text.find('a', {'class': 'link-gray-dark'}).text
     return text
