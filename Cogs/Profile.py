@@ -67,7 +67,7 @@ class Profile(commands.Cog):
         else:
             if owner:
                 embed.add_field(name=f"{utils.emoji('people')} Google Classroom",
-                                value=f"{utils.emoji('cross')} Not Linked. [**Link now**](https://classroom.google.com)", inline=False)
+                                value=f"{utils.emoji('cross')} Not Linked. [**Link now**](https://discordclassroom.com/googleclassroom)", inline=False)
             else:
                 embed.add_field(name=f"{utils.emoji('people')} Google Classroom", value=f"{utils.emoji('cross')} Not Linked.", inline=False)
 
