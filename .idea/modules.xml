@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/DiscordClassroom.iml" filepath="$PROJECT_DIR$/.idea/DiscordClassroom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../DiscordClassroomWeb/.idea/DiscordClassroomWeb.iml" filepath="$PROJECT_DIR$/../DiscordClassroomWeb/.idea/DiscordClassroomWeb.iml" />
     </modules>
   </component>
 </project>

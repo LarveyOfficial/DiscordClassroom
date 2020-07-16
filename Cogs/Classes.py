@@ -1,3 +1,4 @@
+import datetime
 import random
 import string
 
@@ -116,9 +117,12 @@ class Classes(commands.Cog):
                         await ctx.send(embed=embed)
                         teacher = self.bot.get_user(chosen_class['owner'])
                         if teacher is not None and chosen_class['notifications']:
-                            embed=discord.Embed(title=f"{utils.emoji('bell')} Class Notification", description=f"A student named {ctx.author.name} ({str(ctx.author.id)}) has enrolled in {chosen_class['name']} [{chosen_class['code']}]", color=config.MAINCOLOR)
-                            embed.set_footer(text=f"to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
-                            await teacher.send(embed=embed)
+                            config.NOTIFICATIONS.insert_one({'date': datetime.datetime.utcnow(),
+                                                             'title': f"{utils.emoji('bell')} Class Notification",
+                                                             'content': f"A student named {ctx.author.name} ({str(ctx.author.id)}) has enrolled in {chosen_class['name']} [{chosen_class['code']}]",
+                                                             'footer': f"to disable notifications type 'd!class {chosen_class['code']} notifications'",
+                                                             'footer_icon': "https://cdn.discordapp.com/emojis/732116410553073674.png?v=1",
+                                                             'reciever': teacher.id})
                     else:
                         embed = discord.Embed(title=f"{utils.emoji('cross')} You are already enrolled in this class", color=config.MAINCOLOR)
                         await ctx.send(embed=embed)
@@ -146,8 +150,12 @@ class Classes(commands.Cog):
                                 embed = discord.Embed(title=f"{utils.emoji('plus')} Student Added", description=f"{user.name} has been added to the class",color = config.MAINCOLOR)
                                 await ctx.send(embed=embed)
                                 if chosen_class['notifications']:
-                                    embed = discord.Embed(title=f"{utils.emoji('bell')} You have been added to {chosen_class['name']}", description=f"<@{chosen_class['owner']}> has added you to their class.",color = config.MAINCOLOR)
-                                    await user.send(embed=embed)
+                                    config.NOTIFICATIONS.insert_one({'date': datetime.datetime.utcnow(),
+                                                                     'title': f"{utils.emoji('bell')} You have been added to {chosen_class['name']}",
+                                                                     'content': f"<@{chosen_class['owner']}> has added you to their class.",
+                                                                     'footer': None,
+                                                                     'footer_icon': None,
+                                                                     'reciever': user.id})
                             else:
                                 embed = discord.Embed(title=f"{utils.emoji('cross')} User is already in the class.", color=config.MAINCOLOR)
                                 await ctx.send(embed=embed)
@@ -184,8 +192,12 @@ class Classes(commands.Cog):
                                 embed = discord.Embed(title=f"{utils.emoji('minus')}> Student Removed", description=f"{user.name} has been removed from the class",color = config.MAINCOLOR)
                                 await ctx.send(embed=embed)
                                 if chosen_class['notifications']:
-                                    embed = discord.Embed(title=f"{utils.emoji('bell')} You have been removed from {chosen_class['name']}", description=f"<@{chosen_class['owner']}> has removed you to their class.",color = config.MAINCOLOR)
-                                    await user.send(embed=embed)
+                                    config.NOTIFICATIONS.insert_one({'date': datetime.datetime.utcnow(),
+                                                                     'title': f"{utils.emoji('bell')} You have been removed from {chosen_class['name']}",
+                                                                     'content': f"<@{chosen_class['owner']}> has removed you from their class.",
+                                                                     'footer': None,
+                                                                     'footer_icon': None,
+                                                                     'reciever': user.id})
                             else:
                                 embed = discord.Embed(title=f"{utils.emoji('cross')} User not in the class.", color=config.MAINCOLOR)
                                 await ctx.send(embed=embed)
@@ -228,9 +240,12 @@ class Classes(commands.Cog):
                 await ctx.send(embed=embed)
                 teacher = self.bot.get_user(chosen_class['owner'])
                 if teacher is not None and chosen_class['notifications']:
-                    embed=discord.Embed(title=f"{utils.emoji('bell')} Class Notification", description=f"A Student named {ctx.author.name} ({str(ctx.author.id)}) has unenrolled from {chosen_class['name']} [{chosen_class['code']}]", color=config.MAINCOLOR)
-                    embed.set_footer(text=f"to disable notifications type 'd!noti disable'", icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
-                    await teacher.send(embed=embed)
+                    config.NOTIFICATIONS.insert_one({'date': datetime.datetime.utcnow(),
+                                                     'title': f"{utils.emoji('bell')} Class Notification",
+                                                     'content': f"A Student named {ctx.author.name} ({str(ctx.author.id)}) has unenrolled from {chosen_class['name']} [{chosen_class['code']}]",
+                                                     'footer': f"to disable notifications type 'd!class {chosen_class['code']} notifications'",
+                                                     'footer_icon': "https://cdn.discordapp.com/emojis/732116410553073674.png?v=1",
+                                                     'reciever': teacher.id})
             else:
                 embed = discord.Embed(title=f"{utils.emoji('cross')} You are not enrolled in that class", color=config.MAINCOLOR)
                 await ctx.send(embed=embed)
@@ -282,7 +297,7 @@ class Classes(commands.Cog):
             embed = discord.Embed(title=f"{utils.emoji('bell')} Class Notification",
                                   description=f"You will receive notifications from your class {new_class['name']} [{new_class['code']}] and can be turned off at any time.",
                                   color=config.MAINCOLOR)
-            embed.set_footer(text=f"to disable notifications type 'd!noti disable'",
+            embed.set_footer(text=f"to disable notifications type 'd!class {new_class['code']} notifications'",
                              icon_url="https://cdn.discordapp.com/emojis/732116410553073674.png?v=1")
             await ctx.author.send(embed=embed)
 
