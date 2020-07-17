@@ -6,13 +6,15 @@ from bs4 import BeautifulSoup
 from github import Github
 
 
-def get_profile(user_id):
-    document = config.USERS.find_one({'user_id': user_id})
+def get_profile(user):
+    document = config.USERS.find_one({'user_id': user.id})
     if document is None:
-        document = {'user_id': user_id, 'premium': False, 'is_student': True, 'google_classroom': None, 'note': None,
-                    'classes': [], 'teacher_notifications': True, 'student_notifications': True}
+        document = {'user_id': user.id, 'premium': False, 'is_student': True, 'google_classroom': None, 'note': None,
+                    'classes': [], 'teacher_notifications': True, 'student_notifications': True, 'username_cache': user.name, 'discriminator_cache': user.discriminator}
         config.USERS.insert_one(document)
         return document, True
+    if document['username_cache'] != user.name or document['discriminator_cache'] != user.discriminator:
+        config.USERS.update_one({'user_id': user.id}, {'$set': {'username_cache': user.name, 'discriminator_cache': user.discriminator}})
     return document, False
 
 

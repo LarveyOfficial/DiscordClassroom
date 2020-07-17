@@ -14,7 +14,7 @@ class Profile(commands.Cog):
 
     @commands.command()
     async def note(self, ctx, *, note:str=None):
-        account, first_time = utils.get_profile(ctx.author.id)
+        account, first_time = utils.get_profile(ctx.author)
         if note is None:
             embed = discord.Embed(title=f"{utils.emoji('news')} Note",
                                   description=f"Reply with a new note to change the note shown on your profile.\n\n*reply with `cancel` to cancel*",
@@ -48,7 +48,7 @@ class Profile(commands.Cog):
         if user is None:
             user = ctx.author
             owner = True
-        account, first_time = utils.get_profile(user.id)
+        account, first_time = utils.get_profile(user)
         embed = discord.Embed(title=f"{utils.emoji('enter')} {user.name}'s Profile",
                               color=config.MAINCOLOR)
         embed.set_thumbnail(url=str(user.avatar_url))

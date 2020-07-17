@@ -22,7 +22,7 @@ class Classes(commands.Cog):
 
     @commands.command(aliases=['classes', 'c'], name="class")
     async def dash(self, ctx, code:str=None, *, value:str=None):
-        account, first_time = utils.get_profile(ctx.author.id)
+        account, first_time = utils.get_profile(ctx.author)
         if code is None:
             embed = discord.Embed(title=f"{utils.emoji('inv')} Your Classes",
                                   color=config.MAINCOLOR)
@@ -107,7 +107,7 @@ class Classes(commands.Cog):
 
     @commands.command()
     async def join(self, ctx, code:str=None):
-        account, first_time = utils.get_profile(ctx.author.id)
+        account, first_time = utils.get_profile(ctx.author)
         chosen_class = config.CLASSES.find_one({'code': code})
         if chosen_class is not None:
             if chosen_class['owner'] != ctx.author.id:
@@ -256,7 +256,7 @@ class Classes(commands.Cog):
 
     @commands.command(aliases=['cr'])
     async def create(self, ctx, *, name: str = None):
-        account, first_time = utils.get_profile(ctx.author.id)
+        account, first_time = utils.get_profile(ctx.author)
 
         teaching = list(utils.get_teaching_classes(ctx.author.id))
         if len(teaching) >= 8:
