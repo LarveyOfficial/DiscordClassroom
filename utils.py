@@ -10,7 +10,7 @@ def get_profile(user):
     document = config.USERS.find_one({'user_id': user.id})
     if document is None:
         document = {'user_id': user.id, 'premium': False, 'is_student': True, 'google_classroom': None, 'note': None,
-                    'classes': [], 'teacher_notifications': True, 'student_notifications': True, 'username_cache': user.name, 'discriminator_cache': user.discriminator}
+                    'classes': [], 'teacher_notifications': True, 'student_notifications': True, 'username_cache': user.name, 'discriminator_cache': user.discriminator, 'avatar_cache': str(user.avatar_url)}
         config.USERS.insert_one(document)
         return document, True
     if document['username_cache'] != user.name or document['discriminator_cache'] != user.discriminator:
