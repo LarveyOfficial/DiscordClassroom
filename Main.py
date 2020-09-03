@@ -34,6 +34,13 @@ async def invite(ctx):
         color=config.MAINCOLOR))
 
 
+@bot.command()
+async def help(ctx):
+    await ctx.send(embed=discord.Embed(
+        description="`d!profile` - Show your profile\n`d!class [code]` - use d!class to vies your classes. Add a code to view specific information about a class\n`d!join <code>` - join a class\n`d!leave <code>` - leave a class\n`d!create [name]` - start the class creation wizard\n`d!note [note]` - start the note setting wizard\n\n**Teacher Commands**\n`d!remove <user>` - remove a user from a class\n`d!announce <class> <announcement>` - send a message to your class\n`d!add <class> <user>` - add a user to a class directly\n\n**Notes**\n*`Users can join classes with the class join link found in the class info (d!class <code>)`*\n*`You can change settings such as notifications using d!class <code> <setting to toggle>`*\n*`visit us at`*https://discordclassroom.com",
+        color=config.MAINCOLOR))
+
+
 @bot.command(aliases=['v'])
 async def vote(ctx):
     await ctx.send(
