@@ -1,6 +1,6 @@
 # DiscordClassroom
 
-Create and manage many classrooms all on discord. Connect to google classroom and get real-time notifications about due dates, and announcements.
+Create and manage many classrooms all on Discord. Connect to Google Classroom and get real-time notifications about due dates, and announcements.
 
 ## Commands
  > `d!help` - show help menu
