@@ -1,6 +1,6 @@
-# DiscordClassroom
+# DiscordClassroom **DEPRECATED**
 
-Create and manage many classrooms all on discord. Connect to google classroom and get real-time notifications about due dates, and announcements.
+This project is Deprecated and will no longer be worked on
 
 ## Commands
  > `d!help` - show help menu
